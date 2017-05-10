@@ -1,2 +1,39 @@
-<h1>Inventory Manager</h1>
-<hr/>
+{% extends 'base.html.twig' %}
+
+{% block content %}
+
+ <div class="container">
+    <h1>Inventory Manager</h1>
+    <hr/>
+    <table class="table">
+        <thead class="thead-inverse">
+        <tr>
+            <th>#</th>
+            <th>Product Name</th>
+            <th>Cost</th>
+            <th>Stock Quantity</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th scope="row">1</th>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <th scope="row">2</th>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <th scope="row">3</th>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+ </div>
+{% endblock %}
