@@ -30,23 +30,5 @@ class Inventory
      */
     protected $cost;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    protected $stock_quantity;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    protected $store;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    protected $quantity;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    protected $date;
 }
