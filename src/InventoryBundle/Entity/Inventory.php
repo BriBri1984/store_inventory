@@ -30,5 +30,37 @@ class Inventory
      */
     protected $cost;
 
+    /**
+     * @return mixed
+     */
+    public function getProductName()
+    {
+        return $this->product_name;
+    }
+
+    /**
+     * @param mixed $product_name
+     */
+    public function setProductName($product_name)
+    {
+        $this->product_name = $product_name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCost()
+    {
+        return $this->cost;
+    }
+
+    /**
+     * @param mixed $cost
+     */
+    public function setCost($cost)
+    {
+        $this->cost = $cost;
+    }
+
 
 }
