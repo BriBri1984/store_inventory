@@ -33,7 +33,11 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
         $inventory_list = $em->getRepository('InventoryBundle:Inventory')
             ->findAll();
-        dump($inventory_list);die;
+
+        return $this->render('InventoryBundle:Default:show.html.twig', [
+            'inventory' => $inventory_list,
+        ]);
+
     }
 
     /**
