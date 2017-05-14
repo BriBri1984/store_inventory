@@ -59,9 +59,15 @@ class DefaultController extends Controller
     /**
      * @Route("/", name="home_page")
      */
-    public function indexAction()
+    public function homePageAction()
     {
-        return $this->render('InventoryBundle:Default:index.html.twig');
+        $inventoryRepository = $this->getDoctrine()->getRepository('InventoryBundle:Inventory');
+
+        $items = $inventoryRepository->findAll();
+
+        return $this->render('InventoryBundle:Default:index.html.twig', [
+            'items' => $items,
+        ]);
     }
 
     /**

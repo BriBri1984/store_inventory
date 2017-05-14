@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Class Inventory
  * @package InventoryBundle\Entity
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="InventoryBundle\Repository\InventoryRepository")
  * @ORM\Table(name="inventory")
  */
 class Inventory
