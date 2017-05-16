@@ -2,57 +2,53 @@
 
 {% block content %}
 
- <div class="container">
-    <h1>Inventory Manager</h1>
-    <hr/>
+    <div class="container">
+        <h1>Inventory Manager</h1>
+        <hr/>
 
-     <form class="form-inline">
-         <label class="mr-sm-2" for="inlineFormCustomSelect">Add Item</label>
-         <select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="inlineFormCustomSelect">
-             <option selected>Choose...</option>
-             <option value="1">One</option>
-             <option value="2">Two</option>
-             <option value="3">Three</option>
-         </select>
+        {#All form fields should have a name="field_name" property. You will use the name property to get the value in php#}
+        <form class="form-inline" method="post" action="{{ path('create_product') }}">
+            <label class="mr-sm-2" for="inlineFormCustomSelect">Add Item</label>
 
-         <label class="sr-only" for="inlineFormInput">Cost</label>
-         <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" placeholder="Cost">
+            <label class="sr-only" for="inlineFormInput">Name</label>
+            <input type="text" class="form-control mb-4 mr-sm-4 mb-sm-0" id="inlineFormInput" placeholder="Product name"
+                   name="name">
 
-         <label class="sr-only" for="inlineFormInput">Quantity</label>
-         <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" placeholder="Quantity">
+            <label class="sr-only" for="inlineFormInput">Cost</label>
+            <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" placeholder="Cost"
+                   name="cost">
 
-         <button type="submit" class="btn btn-primary">Submit</button>
-     </form>
+            <label class="sr-only" for="inlineFormInput">Quantity</label>
+            <input type="number" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" placeholder="Quantity"
+                   name="quantity">
 
-    <table class="table">
-        <thead class="thead-inverse">
-        <tr>
-            <th>#</th>
-            <th>Product Name</th>
-            <th>Cost</th>
-            <th>Stock Quantity</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <th scope="row"></th>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <th scope="row"></th>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <th scope="row"></th>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        </tbody>
-    </table>
- </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+        {% if items is not empty %}
+
+            <table class="table">
+                <thead class="thead-inverse">
+                <tr>
+                    <th>#</th>
+                    <th>Product Name</th>
+                    <th>Cost</th>
+                    <th>Stock Quantity</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in items %}
+                    <tr>
+                        <th scope="row">{{ item.id }}</th>
+                        <td>{{ item.productName }}</td>
+                        <td>{{ item.cost }}</td>
+                        <td>{{ item.quantity }}</td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        {% endif %}
+        
+    </div>
 {% endblock %}
