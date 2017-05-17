@@ -55,6 +55,11 @@ class Inventory
     protected $quantity;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Stores")
+     */
+    protected $stores;
+
+    /**
      * @return mixed
      */
     public function getId()
@@ -152,6 +157,22 @@ class Inventory
         $this->quantity = $quantity;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStores()
+    {
+        return $this->stores;
+    }
+
+    /**
+     * @param mixed $stores
+     */
+    public function setStores(Stores $stores)
+    {
+        $this->stores = $stores;
     }
 
 }

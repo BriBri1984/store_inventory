@@ -26,12 +26,20 @@ class DefaultController extends Controller
 //        dump($request->request->all());
 //        die();
 
+        $stores = new Stores();
+        $stores->setStoreName($request->get('name'));
+        $stores->setLocation($request->get('location'));
+        $stores->setManager($request->get('manager'));
+        $stores->setPhoneNumber($request->get('phone'));
+
         $inventory = new Inventory();
         $inventory->setProductName($request->get('name'));
         $inventory->setCost($request->get('cost'));
         $inventory->setQuantity($request->get('quantity'));
+        $inventory->setStores($stores);
 
         $em = $this->getDoctrine()->getManager();
+        $em->persist($stores);
         $em->persist($inventory);
         $em->flush();
 
@@ -42,12 +50,12 @@ class DefaultController extends Controller
         //return new Response('<html><body>Inventory created</body></html>');
     }
 
-    /**
+   /* /**
      * @Route("/new_store", name="create_store")
      * @param Request $request
      * @return Response
      */
-    public function storeDataAction(Request $request)
+    /*public function storeDataAction(Request $request)
     {
         $stores = new Stores();
         $stores->setStoreName($request->get('name'));
@@ -60,7 +68,7 @@ class DefaultController extends Controller
         $em->flush();
 
         return $this->redirectToRoute('stores');
-    }
+    }*/
 
     /**
      * @Route("/show")
