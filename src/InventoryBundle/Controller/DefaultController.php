@@ -3,6 +3,7 @@
 namespace InventoryBundle\Controller;
 
 use InventoryBundle\Entity\Inventory;
+use InventoryBundle\Entity\Stores;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,6 +43,26 @@ class DefaultController extends Controller
     }
 
     /**
+     * @Route("/new_store", name="create_store")
+     * @param Request $request
+     * @return Response
+     */
+    public function storeDataAction(Request $request)
+    {
+        $stores = new Stores();
+        $stores->setStoreName($request->get('name'));
+        $stores->setLocation($request->get('location'));
+        $stores->setManager($request->get('manager'));
+        $stores->setPhoneNumber($request->get('phone'));
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($stores);
+        $em->flush();
+
+        return $this->redirectToRoute('stores');
+    }
+
+    /**
      * @Route("/show")
      */
     public function listAction()
@@ -71,11 +92,17 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/charge")
+     * @Route("/stores", name="stores")
      */
-    public function chargeAction()
+    public function storesPageAction()
     {
-        return $this->render('InventoryBundle:Default:charge_store.html.twig');
+       $storeRepository = $this->getDoctrine()->getRepository('InventoryBundle:Stores');
+
+       $stores = $storeRepository->findAll();
+
+       return $this->render('InventoryBundle:Default:stores.html.twig', [
+           'stores' => $stores,
+       ]);
     }
 
     /**

@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+
+    <div class="container">
+        <h1>Stores</h1>
+        <hr/>
+
+        {#All form fields should have a name="field_name" property. You will use the name property to get the value in php#}
+        <form class="form-inline" method="post" action="{{ path('create_store') }}">
+            <label class="mr-sm-2" for="inlineFormCustomSelect">Add Store</label>
+
+            <label class="sr-only" for="inlineFormInput">Name</label>
+            <input type="text" class="form-control mb-4 mr-sm-4 mb-sm-0" id="inlineFormInput" placeholder="Store Name"
+                   name="name">
+
+            <label class="sr-only" for="inlineFormInput">Location</label>
+            <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" placeholder="Location"
+                   name="location">
+
+            <label class="sr-only" for="inlineFormInput">Manager</label>
+            <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" placeholder="Manager"
+                   name="manager">
+
+            <label class="sr-only" for="inlineFormInput">Phone Number</label>
+            <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" placeholder="Phone Number"
+                   name="phone">
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+
+        {% if stores is not empty %}
+            <table class="table">
+                <thead class="thead-inverse">
+                <tr>
+                    <th>#</th>
+                    <th>Store Name</th>
+                    <th>Location</th>
+                    <th>Manager</th>
+                    <th>Phone Number</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for store in stores %}
+                    <tr>
+                        <th scope="row">{{ store.id }}</th>
+                        <td>{{ store.storeName }}</td>
+                        <td>{{ store.location }}</td>
+                        <td>{{ store.manager }}</td>
+                        <td>{{ store.phoneNumber }}</td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+{% endblock %}
