@@ -54,7 +54,7 @@ class DefaultController extends Controller
 
 
     /**
-     * @Route(name="create_store")
+     * @Route(name="create_store", path="/create_store", methods={"POST"})
      * @param Request $request
      *
      * @return RedirectResponse
@@ -73,27 +73,6 @@ class DefaultController extends Controller
 
         return $this->redirectToRoute('stores');
     }
-
-
-    /* /**
-      * @Route("/new_store", name="create_store")
-      * @param Request $request
-      * @return Response
-      */
-    /*public function storeDataAction(Request $request)
-    {
-        $stores = new Stores();
-        $stores->setStoreName($request->get('name'));
-        $stores->setLocation($request->get('location'));
-        $stores->setManager($request->get('manager'));
-        $stores->setPhoneNumber($request->get('phone'));
-
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($stores);
-        $em->flush();
-
-        return $this->redirectToRoute('stores');
-    }*/
 
     /**
      * @Route("/show")
