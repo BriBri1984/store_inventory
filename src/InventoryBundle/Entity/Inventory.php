@@ -55,7 +55,7 @@ class Inventory
     protected $quantity;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Stores")
+     * @ORM\ManyToOne(targetEntity="Stores" , inversedBy="inventory")
      */
     protected $stores;
 

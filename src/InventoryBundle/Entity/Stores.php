@@ -8,6 +8,7 @@
 
 namespace InventoryBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -45,6 +46,12 @@ class Stores
      *
      * @ORM\Column(name="phone_number", type="string", nullable=false)
      */private $phoneNumber;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Inventory" , mappedBy="stores")
+     */
+     private $inventory;
+    
 
     /**
      * @return mixed
