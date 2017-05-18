@@ -6,8 +6,10 @@ use InventoryBundle\Entity\Inventory;
 use InventoryBundle\Entity\Stores;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\HttpCache\Store;
 
 class DefaultController extends Controller
 {
@@ -50,11 +52,34 @@ class DefaultController extends Controller
         //return new Response('<html><body>Inventory created</body></html>');
     }
 
-   /* /**
-     * @Route("/new_store", name="create_store")
+
+    /**
+     * @Route(name="create_store")
      * @param Request $request
-     * @return Response
+     *
+     * @return RedirectResponse
      */
+    public function createStoreAction(Request $request)
+    {
+        $store = new Stores();
+        $store->setStoreName($request->get('name'));
+        $store->setLocation($request->get('location'));
+        $store->setManager($request->get('manager'));
+        $store->setPhoneNumber($request->get('phone'));
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($store);
+        $em->flush();
+
+        return $this->redirectToRoute('stores');
+    }
+
+
+    /* /**
+      * @Route("/new_store", name="create_store")
+      * @param Request $request
+      * @return Response
+      */
     /*public function storeDataAction(Request $request)
     {
         $stores = new Stores();
@@ -104,13 +129,13 @@ class DefaultController extends Controller
      */
     public function storesPageAction()
     {
-       $storeRepository = $this->getDoctrine()->getRepository('InventoryBundle:Stores');
+        $storeRepository = $this->getDoctrine()->getRepository('InventoryBundle:Stores');
 
-       $stores = $storeRepository->findAll();
+        $stores = $storeRepository->findAll();
 
-       return $this->render('InventoryBundle:Default:stores.html.twig', [
-           'stores' => $stores,
-       ]);
+        return $this->render('InventoryBundle:Default:stores.html.twig', [
+            'stores' => $stores,
+        ]);
     }
 
     /**
