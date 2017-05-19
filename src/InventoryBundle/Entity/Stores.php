@@ -51,7 +51,12 @@ class Stores
      * @ORM\OneToMany(targetEntity="Inventory" , mappedBy="stores")
      */
      private $inventory;
-    
+
+     public function __construct()
+     {
+         $this->inventory = new ArrayCollection();
+     }
+
 
     /**
      * @return mixed
@@ -142,5 +147,15 @@ class Stores
     {
         $this->phoneNumber = $phoneNumber;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getInventory()
+    {
+        return $this->inventory;
+    }
+
+
 
 }

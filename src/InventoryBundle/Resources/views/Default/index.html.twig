@@ -23,6 +23,17 @@
                    name="quantity">
 
             <button type="submit" class="btn btn-primary">Submit</button>
+
+            <div class="btn-group">
+                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Select Store
+                </button>
+                <div class="dropdown-menu">
+                    {% for item in items %}
+                        <a class="dropdown-item" href="">{{ item.stores }}</a>
+                    {% endfor %}
+                </div>
+            </div>
         </form>
 
         {% if items is not empty %}
@@ -39,7 +50,7 @@
                 <tbody>
                 {% for item in items %}
                     <tr>
-                        <th scope="row">{{ item.id }}</th>
+                        <th>scope="row">{{ item.id }}</th>
                         <td>{{ item.productName }}</td>
                         <td>{{ item.cost }}</td>
                         <td>{{ item.quantity }}</td>

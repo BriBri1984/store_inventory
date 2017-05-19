@@ -95,11 +95,14 @@ class DefaultController extends Controller
     public function homePageAction()
     {
         $inventoryRepository = $this->getDoctrine()->getRepository('InventoryBundle:Inventory');
+        $storeRepository = $this->getDoctrine()->getRepository('InventoryBundle:Stores');
 
         $items = $inventoryRepository->findAll();
+        $id = $storeRepository->find($id);
 
         return $this->render('InventoryBundle:Default:index.html.twig', [
             'items' => $items,
+            'id'    => $id,
         ]);
     }
 
