@@ -22,18 +22,14 @@
             <input type="number" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" placeholder="Quantity"
                    name="quantity">
 
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <select name="store" class="form-control">
+                <option value="">Select Store</option>
+                {% for store in stores %}
+                    <option value="{{ store.id }}">{{ store.storeName }}</option>
+                {% endfor %}
+            </select>
 
-            <div class="btn-group">
-                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Select Store
-                </button>
-                <div class="dropdown-menu">
-                    {% for item in items %}
-                        <a class="dropdown-item" href="">{{ item.stores }}</a>
-                    {% endfor %}
-                </div>
-            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
         </form>
 
         {% if items is not empty %}
@@ -60,6 +56,6 @@
                 </tbody>
             </table>
         {% endif %}
-        
+
     </div>
 {% endblock %}

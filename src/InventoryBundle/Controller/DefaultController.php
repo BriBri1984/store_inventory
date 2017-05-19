@@ -98,11 +98,11 @@ class DefaultController extends Controller
         $storeRepository = $this->getDoctrine()->getRepository('InventoryBundle:Stores');
 
         $items = $inventoryRepository->findAll();
-        $id = $storeRepository->find($id);
+        $stores = $storeRepository->findAll();
 
         return $this->render('InventoryBundle:Default:index.html.twig', [
             'items' => $items,
-            'id'    => $id,
+            'stores'    => $stores,
         ]);
     }
 
