@@ -3,53 +3,59 @@
 namespace InventoryBundle\Controller;
 
 use InventoryBundle\Entity\Inventory;
-use InventoryBundle\Entity\Stores;
+use InventoryBundle\Entity\Store;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\HttpCache\Store;
 
 class DefaultController extends Controller
 {
+
+    /**
+     * @Route("/", name="inventory_page")
+     */
+    public function inventoryPageAction()
+    {
+        $inventoryRepository = $this->getDoctrine()->getRepository(Inventory::class);
+        $storeRepository     = $this->getDoctrine()->getRepository(Store::class);
+
+        $items  = $inventoryRepository->findAll();
+        $stores = $storeRepository->findAll();
+
+        return $this->render('InventoryBundle:Default:index.html.twig', [
+            'items'  => $items,
+            'stores' => $stores,
+        ]);
+    }
+
     /**
      * @todo brian note that once you give a route a name you can access it in twig using the path("route_name") function
      * I added it to the form in InventoryBundle:Default:index.html.twig
      *
-     * @Route("/new", name="create_product")
+     * @Route("/create_inventory", name="create_inventory")
      * @param Request $request This is the dependency injected Request object. Dont overthink it, it's a part of the framework and lets you access form data, among other things
      *
      * @return Response
      */
-    public function newAction(Request $request)
+    public function newInventoryAction(Request $request)
     {
-//        You can use the dump function to debug things
-//        dump($request->request->all());
-//        die();
+        $storeId = $request->get('store_id_from_frontend_form');
 
-        $stores = new Stores();
-        $stores->setStoreName($request->get('name'));
-        $stores->setLocation($request->get('location'));
-        $stores->setManager($request->get('manager'));
-        $stores->setPhoneNumber($request->get('phone'));
+        $store = $this->getDoctrine()->getRepository(Store::class)->find($storeId);
 
         $inventory = new Inventory();
         $inventory->setProductName($request->get('name'));
         $inventory->setCost($request->get('cost'));
         $inventory->setQuantity($request->get('quantity'));
-        $inventory->setStores($stores);
+        $inventory->setStore($store);
 
         $em = $this->getDoctrine()->getManager();
-        $em->persist($stores);
         $em->persist($inventory);
         $em->flush();
 
-        //You can redirect them back to the homepage, because we are now going to show a list of products there
-        // This list will include the newly added item
-        return $this->redirectToRoute('home_page');
-
-        //return new Response('<html><body>Inventory created</body></html>');
+        return $this->redirectToRoute('inventory_page');
     }
 
 
@@ -61,7 +67,7 @@ class DefaultController extends Controller
      */
     public function createStoreAction(Request $request)
     {
-        $store = new Stores();
+        $store = new Store();
         $store->setStoreName($request->get('name'));
         $store->setLocation($request->get('location'));
         $store->setManager($request->get('manager'));
@@ -80,7 +86,7 @@ class DefaultController extends Controller
     public function listAction()
     {
         $em             = $this->getDoctrine()->getManager();
-        $inventory_list = $em->getRepository('InventoryBundle:Inventory')
+        $inventory_list = $em->getRepository(Inventory::class)
             ->findAll();
 
         return $this->render('InventoryBundle:Default:show.html.twig', [
@@ -89,29 +95,13 @@ class DefaultController extends Controller
 
     }
 
-    /**
-     * @Route("/", name="home_page")
-     */
-    public function homePageAction()
-    {
-        $inventoryRepository = $this->getDoctrine()->getRepository('InventoryBundle:Inventory');
-        $storeRepository = $this->getDoctrine()->getRepository('InventoryBundle:Stores');
-
-        $items = $inventoryRepository->findAll();
-        $stores = $storeRepository->findAll();
-
-        return $this->render('InventoryBundle:Default:index.html.twig', [
-            'items' => $items,
-            'stores'    => $stores,
-        ]);
-    }
 
     /**
      * @Route("/stores", name="stores")
      */
     public function storesPageAction()
     {
-        $storeRepository = $this->getDoctrine()->getRepository('InventoryBundle:Stores');
+        $storeRepository = $this->getDoctrine()->getRepository(Store::class);
 
         $stores = $storeRepository->findAll();
 

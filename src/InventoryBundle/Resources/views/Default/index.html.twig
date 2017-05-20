@@ -7,7 +7,7 @@
         <hr/>
 
         {#All form fields should have a name="field_name" property. You will use the name property to get the value in php#}
-        <form class="form-inline" method="post" action="{{ path('create_product') }}">
+        <form class="form-inline" method="post" action="{{ path('create_inventory') }}">
             <label class="mr-sm-2" for="inlineFormCustomSelect">Add Item</label>
 
             <label class="sr-only" for="inlineFormInput">Name</label>
@@ -22,7 +22,7 @@
             <input type="number" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" placeholder="Quantity"
                    name="quantity">
 
-            <select name="store" class="form-control">
+            <select name="store_id_from_frontend_form" class="form-control">
                 <option value="">Select Store</option>
                 {% for store in stores %}
                     <option value="{{ store.id }}">{{ store.storeName }}</option>
@@ -41,15 +41,19 @@
                     <th>Product Name</th>
                     <th>Cost</th>
                     <th>Stock Quantity</th>
+                    <th>Store</th>
+                    <th>Location</th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for item in items %}
                     <tr>
-                        <th>scope="row">{{ item.id }}</th>
+                        <th scope="row">{{ item.id }}</th>
                         <td>{{ item.productName }}</td>
                         <td>{{ item.cost }}</td>
                         <td>{{ item.quantity }}</td>
+                        <td>{{ item.store.storeName }}</td>
+                        <td>{{ item.store.location }}</td>
                     </tr>
                 {% endfor %}
 

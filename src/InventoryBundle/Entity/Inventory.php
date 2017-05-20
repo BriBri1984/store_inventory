@@ -55,9 +55,9 @@ class Inventory
     protected $quantity;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Stores" , inversedBy="inventory")
+     * @ORM\ManyToOne(targetEntity="Store" , inversedBy="inventory")
      */
-    protected $stores;
+    protected $store;
 
     /**
      * @return mixed
@@ -162,17 +162,20 @@ class Inventory
     /**
      * @return mixed
      */
-    public function getStores()
+    public function getStore()
     {
-        return $this->stores;
+        return $this->store;
     }
 
     /**
-     * @param mixed $stores
+     * @param mixed $store
+     *
+     * @return Inventory
      */
-    public function setStores(Stores $stores)
+    public function setStore($store)
     {
-        $this->stores = $stores;
-    }
+        $this->store = $store;
 
+        return $this;
+    }
 }

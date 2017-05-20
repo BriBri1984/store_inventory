@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: brianmartinez
- * Date: 5/17/17
- * Time: 3:08 AM
- */
 
 namespace InventoryBundle\Entity;
 
@@ -13,50 +7,54 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="InventoryBundle\Repository\InventoryRepository")
- * @ORM\Table(name="stores")
+ * @ORM\Table(name="store")
  */
-class Stores
+class Store
 {
     /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
-     */private $id;
+     */
+    private $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="store_name", type="string", nullable=false)
-     */private $storeName;
+     */
+    private $storeName;
 
     /**
      * @var string
      *
      * @ORM\Column(name="location", type="string", nullable=false)
-     */private $location;
+     */
+    private $location;
 
     /**
      * @var string
      *
      * @ORM\Column(name="manager", type="string", nullable=false)
-     */private $manager;
+     */
+    private $manager;
 
     /**
      * @var string
      *
      * @ORM\Column(name="phone_number", type="string", nullable=false)
-     */private $phoneNumber;
+     */
+    private $phoneNumber;
 
     /**
-     * @ORM\OneToMany(targetEntity="Inventory" , mappedBy="stores")
+     * @ORM\OneToMany(targetEntity="Inventory" , mappedBy="store")
      */
-     private $inventory;
+    private $inventory;
 
-     public function __construct()
-     {
-         $this->inventory = new ArrayCollection();
-     }
-
+    public function __construct()
+    {
+        $this->inventory = new ArrayCollection();
+    }
 
     /**
      * @return mixed
@@ -155,7 +153,6 @@ class Stores
     {
         return $this->inventory;
     }
-
 
 
 }
