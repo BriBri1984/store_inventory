@@ -43,6 +43,7 @@
                     <th>Stock Quantity</th>
                     <th>Store</th>
                     <th>Location</th>
+                    <th>Edit</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -52,8 +53,21 @@
                         <td>{{ item.productName }}</td>
                         <td>{{ item.cost }}</td>
                         <td>{{ item.quantity }}</td>
-                        <td>{{ item.store.storeName }}</td>
-                        <td>{{ item.store.location }}</td>
+                        <td>
+                            {% if item.store %}
+                                {{ item.store.storeName }}
+                            {% else %}
+                                NO STORE FOUND
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if item.store %}
+                                {{ item.store.location }}
+                            {% else %}
+                                NO STORE LOCATION FOUND
+                            {% endif %}
+                        </td>
+                        <td><a href="{{ path('edit_inventory_form', {"id": item.id}) }}">Edit</a></td>
                     </tr>
                 {% endfor %}
 

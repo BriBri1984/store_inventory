@@ -20,9 +20,9 @@ class DefaultController extends Controller
     {
         $inventoryRepository = $this->getDoctrine()->getRepository(Inventory::class);
         $storeRepository     = $this->getDoctrine()->getRepository(Store::class);
-
-        $items  = $inventoryRepository->findAll();
         $stores = $storeRepository->findAll();
+        $items  = $inventoryRepository->findAll();
+
 
         return $this->render('InventoryBundle:Default:index.html.twig', [
             'items'  => $items,
@@ -116,5 +116,60 @@ class DefaultController extends Controller
     public function orderhistory1Action()
     {
         return $this->render('InventoryBundle:Default:a1_order_history.html.twig');
+    }
+
+    /**
+     * @Route ("/edit_inventory_form/{id}", name="edit_inventory_form")
+     * @return Response
+     * just a sec
+     *
+     *
+     */
+    public function editInventoryFormAction($id)
+    {
+        $storeRepository     = $this->getDoctrine()->getRepository(Store::class);
+        $stores = $storeRepository->findAll();
+
+        $inventoryRepository = $this->getDoctrine()->getRepository(Inventory::class);
+        $inventory = $inventoryRepository->find($id);
+
+        return $this->render('@Inventory/Default/edit.inventory.form.html.twig', [
+            'stores' => $stores,
+            'inventory' => $inventory
+        ]);
+    }
+
+    /**
+     * @param Request $request
+     * @param inventoryId
+     * @Route("/save_inventory_edit/{inventoryId}", name="save_inventory_edit")
+     */
+    public function saveInventoryEdit(Request $request, $inventoryId)
+    {
+        // find the inventory record, and get an inventory entity
+        $inventoryRepo = $this->getDoctrine()->getRepository(Inventory::class );
+        $inventory = $inventoryRepo->find($inventoryId);
+
+        // Use the $request object to get all values from the form
+        $productName = $request->get('product_name');
+        $cost = $request->get('cost');
+        $quantity = $request->get('quantity');
+        $storeId = $request->get('store_id_from_frontend_form');
+
+        // Use setters on the entity to update the values from the request object
+        $inventory->setProductName($productName);
+        $inventory->setCost($cost);
+        $inventory->setQuantity($quantity);
+
+        $store = $this->getDoctrine()->getRepository(Store::class)->find($storeId);
+        $inventory->setStore($store);
+
+        // persist the entity, using the entity manager
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($inventory);
+        $em->flush();
+
+        // redirect the user back to the home page (inventory list page) using $this->>redirectToRoute();
+        return $this->redirectToRoute('inventory_page');//lol
     }
 }
