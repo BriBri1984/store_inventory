@@ -161,6 +161,7 @@ class DefaultController extends Controller
         $inventory->setCost($cost);
         $inventory->setQuantity($quantity);
 
+
         $store = $this->getDoctrine()->getRepository(Store::class)->find($storeId);
         $inventory->setStore($store);
 

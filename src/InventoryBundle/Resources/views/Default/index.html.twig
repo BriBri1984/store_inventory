@@ -42,7 +42,6 @@
                     <th>Cost</th>
                     <th>Stock Quantity</th>
                     <th>Store</th>
-                    <th>Location</th>
                     <th>Edit</th>
                 </tr>
                 </thead>
@@ -58,13 +57,6 @@
                                 {{ item.store.storeName }}
                             {% else %}
                                 NO STORE FOUND
-                            {% endif %}
-                        </td>
-                        <td>
-                            {% if item.store %}
-                                {{ item.store.location }}
-                            {% else %}
-                                NO STORE LOCATION FOUND
                             {% endif %}
                         </td>
 
