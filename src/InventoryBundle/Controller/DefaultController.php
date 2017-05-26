@@ -121,7 +121,6 @@ class DefaultController extends Controller
     /**
      * @Route ("/edit_inventory_form/{id}", name="edit_inventory_form")
      * @return Response
-     * just a sec
      *
      *
      */
@@ -143,6 +142,7 @@ class DefaultController extends Controller
      * @param Request $request
      * @param inventoryId
      * @Route("/save_inventory_edit/{inventoryId}", name="save_inventory_edit")
+     * @return RedirectResponse
      */
     public function saveInventoryEdit(Request $request, $inventoryId)
     {
@@ -171,5 +171,49 @@ class DefaultController extends Controller
 
         // redirect the user back to the home page (inventory list page) using $this->>redirectToRoute();
         return $this->redirectToRoute('inventory_page');//lol
+    }
+
+    /**
+     * @param $id
+     * @Route("/edit_store_form/{id}", name="edit_store_form")
+     * @return Response
+     */
+    public function editStoreFormAction($id)
+    {
+        $storesRepo = $this->getDoctrine()->getRepository(Store::class);
+        $stores = $storesRepo->find($id);
+
+        return $this->render('InventoryBundle:Default:edit.store.form.html.twig', [
+            'stores'=> $stores
+        ]);
+
+    }
+
+    /**
+     * @param Request $request
+     * @param id
+     * @Route("/save_store_edit/{id}", name="save_store_edit")
+     * @return RedirectResponse
+     */
+    public function saveStoreEdit(Request $request, $id)
+    {
+        $storeRepo = $this->getDoctrine()->getRepository(Store::class);
+        $store = $storeRepo->find($id);
+
+        $storeName = $request->get('store_name');
+        $location = $request->get('location');
+        $manager = $request->get('manager');
+        $phoneNumber = $request->get('phone');
+
+        $store->setStoreName($storeName);
+        $store->setLocation($location);
+        $store->setManager($manager);
+        $store->setPhoneNumber($phoneNumber);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($store);
+        $em->flush();
+
+        return $this->redirectToRoute('stores');
     }
 }

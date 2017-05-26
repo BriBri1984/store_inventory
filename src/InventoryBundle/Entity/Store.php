@@ -67,7 +67,7 @@ class Store
     /**
      * @param mixed $id
      *
-     * @return Stores
+     * @return Store
      */
     public function setId($id)
     {
@@ -85,7 +85,7 @@ class Store
     /**
      * @param mixed $storeName
      *
-     * @return Stores
+     * @return Store
      */
     public function setStoreName($storeName)
     {
@@ -103,7 +103,7 @@ class Store
     /**
      * @param mixed $location
      *
-     * @return Stores
+     * @return Store
      */
     public function setLocation($location)
     {
@@ -121,7 +121,7 @@ class Store
     /**
      * @param mixed $manager
      *
-     * @return Stores
+     * @return Store
      */
     public function setManager($manager)
     {
@@ -139,7 +139,7 @@ class Store
     /**
      * @param mixed $phoneNumber
      *
-     * @return Stores
+     * @return Store
      */
     public function setPhoneNumber($phoneNumber)
     {

@@ -67,7 +67,10 @@
                                 NO STORE LOCATION FOUND
                             {% endif %}
                         </td>
-                        <td><a href="{{ path('edit_inventory_form', {"id": item.id}) }}">Edit</a></td>
+
+                        <td>
+                            <a href="{{ path('edit_inventory_form', {"id": item.id}) }}" class="btn btn-xs btn-primary"><span class="fa fa-pencil"></span></a>
+                        </td>
                     </tr>
                 {% endfor %}
 

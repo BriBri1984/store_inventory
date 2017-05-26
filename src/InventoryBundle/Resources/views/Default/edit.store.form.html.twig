@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+
+    <div class="container">
+        <h1>Store Edit</h1>
+        <hr/>
+
+        {#All form fields should have a name="field_name" property. You will use the name property to get the value in php#}
+        <form class="form-inline" method="post" action="{{ path('save_store_edit', {"id": stores.id }) }}">
+            <label class="mr-sm-2" for="inlineFormCustomSelect">Edit Store</label>
+
+            <label class="sr-only" for="inlineFormInput">Name</label>
+            <input type="text" class="form-control mb-4 mr-sm-4 mb-sm-0" id="inlineFormInput" placeholder="Store Name"
+                   name="store_name" value="{{ stores.storeName }}">
+
+            <label class="sr-only" for="inlineFormInput">Location</label>
+            <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" placeholder="Location"
+                   name="location" value="{{ stores.location }}">
+
+            <label class="sr-only" for="inlineFormInput">Manager</label>
+            <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" placeholder="Manager"
+                   name="manager" value="{{ stores.manager }}">
+
+            <label class="sr-only" for="inlineFormInput">Phone Number</label>
+            <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" placeholder="Phone Number"
+                   name="phone" value="{{ stores.phoneNumber }}">
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+{% endblock %}
