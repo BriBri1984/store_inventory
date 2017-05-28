@@ -1,50 +1,60 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: brianmartinez
- * Date: 5/17/17
- * Time: 3:08 AM
- */
 
 namespace InventoryBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="InventoryBundle\Repository\InventoryRepository")
- * @ORM\Table(name="stores")
+ * @ORM\Table(name="store")
  */
-class Stores
+class Store
 {
     /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @ORM\Column(type="integer")
-     */private $id;
+     */
+    private $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="store_name", type="string", nullable=false)
-     */private $storeName;
+     */
+    private $storeName;
 
     /**
      * @var string
      *
      * @ORM\Column(name="location", type="string", nullable=false)
-     */private $location;
+     */
+    private $location;
 
     /**
      * @var string
      *
      * @ORM\Column(name="manager", type="string", nullable=false)
-     */private $manager;
+     */
+    private $manager;
 
     /**
      * @var string
      *
      * @ORM\Column(name="phone_number", type="string", nullable=false)
-     */private $phoneNumber;
+     */
+    private $phoneNumber;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Inventory" , mappedBy="store")
+     */
+    private $inventory;
+
+    public function __construct()
+    {
+        $this->inventory = new ArrayCollection();
+    }
 
     /**
      * @return mixed
@@ -57,7 +67,7 @@ class Stores
     /**
      * @param mixed $id
      *
-     * @return Stores
+     * @return Store
      */
     public function setId($id)
     {
@@ -75,7 +85,7 @@ class Stores
     /**
      * @param mixed $storeName
      *
-     * @return Stores
+     * @return Store
      */
     public function setStoreName($storeName)
     {
@@ -93,7 +103,7 @@ class Stores
     /**
      * @param mixed $location
      *
-     * @return Stores
+     * @return Store
      */
     public function setLocation($location)
     {
@@ -111,7 +121,7 @@ class Stores
     /**
      * @param mixed $manager
      *
-     * @return Stores
+     * @return Store
      */
     public function setManager($manager)
     {
@@ -129,11 +139,20 @@ class Stores
     /**
      * @param mixed $phoneNumber
      *
-     * @return Stores
+     * @return Store
      */
     public function setPhoneNumber($phoneNumber)
     {
         $this->phoneNumber = $phoneNumber;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getInventory()
+    {
+        return $this->inventory;
+    }
+
 
 }

@@ -7,7 +7,7 @@
         <hr/>
 
         {#All form fields should have a name="field_name" property. You will use the name property to get the value in php#}
-        <form class="form-inline" method="post" action="{{ path('create_product') }}">
+        <form class="form-inline" method="post" action="{{ path('create_inventory') }}">
             <label class="mr-sm-2" for="inlineFormCustomSelect">Add Item</label>
 
             <label class="sr-only" for="inlineFormInput">Name</label>
@@ -22,6 +22,13 @@
             <input type="number" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" placeholder="Quantity"
                    name="quantity">
 
+            <select name="store_id_from_frontend_form" class="form-control">
+                <option value="">Select Store</option>
+                {% for store in stores %}
+                    <option value="{{ store.id }}">{{ store.storeName }}</option>
+                {% endfor %}
+            </select>
+
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
 
@@ -34,6 +41,8 @@
                     <th>Product Name</th>
                     <th>Cost</th>
                     <th>Stock Quantity</th>
+                    <th>Store</th>
+                    <th>Edit</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -43,12 +52,23 @@
                         <td>{{ item.productName }}</td>
                         <td>{{ item.cost }}</td>
                         <td>{{ item.quantity }}</td>
+                        <td>
+                            {% if item.store %}
+                                {{ item.store.storeName }}
+                            {% else %}
+                                NO STORE FOUND
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            <a href="{{ path('edit_inventory_form', {"id": item.id}) }}" class="btn btn-xs btn-primary"><span class="fa fa-pencil"></span></a>
+                        </td>
                     </tr>
                 {% endfor %}
 
                 </tbody>
             </table>
         {% endif %}
-        
+
     </div>
 {% endblock %}
