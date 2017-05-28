@@ -4,6 +4,7 @@ namespace InventoryBundle\Controller;
 
 use InventoryBundle\Entity\Inventory;
 use InventoryBundle\Entity\Store;
+use InventoryBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -18,15 +19,26 @@ class DefaultController extends Controller
      */
     public function inventoryPageAction()
     {
+        $user    = null;
+        $session = $this->get('session');
+
+        if ($session->get('logged_in') == true) {
+            $userId = $session->get('user_id');
+            if (!empty($userId)) {
+                $user = $this->getDoctrine()->getRepository(User::class)->find($userId);
+            }
+        }
+
         $inventoryRepository = $this->getDoctrine()->getRepository(Inventory::class);
         $storeRepository     = $this->getDoctrine()->getRepository(Store::class);
-        $stores = $storeRepository->findAll();
-        $items  = $inventoryRepository->findAll();
+        $stores              = $storeRepository->findAll();
+        $items               = $inventoryRepository->findAll();
 
 
         return $this->render('InventoryBundle:Default:index.html.twig', [
             'items'  => $items,
             'stores' => $stores,
+            'user'   => $user,
         ]);
     }
 
@@ -126,15 +138,15 @@ class DefaultController extends Controller
      */
     public function editInventoryFormAction($id)
     {
-        $storeRepository     = $this->getDoctrine()->getRepository(Store::class);
-        $stores = $storeRepository->findAll();
+        $storeRepository = $this->getDoctrine()->getRepository(Store::class);
+        $stores          = $storeRepository->findAll();
 
         $inventoryRepository = $this->getDoctrine()->getRepository(Inventory::class);
-        $inventory = $inventoryRepository->find($id);
+        $inventory           = $inventoryRepository->find($id);
 
         return $this->render('@Inventory/Default/edit.inventory.form.html.twig', [
-            'stores' => $stores,
-            'inventory' => $inventory
+            'stores'    => $stores,
+            'inventory' => $inventory,
         ]);
     }
 
@@ -142,19 +154,20 @@ class DefaultController extends Controller
      * @param Request $request
      * @param inventoryId
      * @Route("/save_inventory_edit/{inventoryId}", name="save_inventory_edit")
+     *
      * @return RedirectResponse
      */
     public function saveInventoryEdit(Request $request, $inventoryId)
     {
         // find the inventory record, and get an inventory entity
-        $inventoryRepo = $this->getDoctrine()->getRepository(Inventory::class );
-        $inventory = $inventoryRepo->find($inventoryId);
+        $inventoryRepo = $this->getDoctrine()->getRepository(Inventory::class);
+        $inventory     = $inventoryRepo->find($inventoryId);
 
         // Use the $request object to get all values from the form
         $productName = $request->get('product_name');
-        $cost = $request->get('cost');
-        $quantity = $request->get('quantity');
-        $storeId = $request->get('store_id_from_frontend_form');
+        $cost        = $request->get('cost');
+        $quantity    = $request->get('quantity');
+        $storeId     = $request->get('store_id_from_frontend_form');
 
         // Use setters on the entity to update the values from the request object
         $inventory->setProductName($productName);
@@ -177,15 +190,16 @@ class DefaultController extends Controller
     /**
      * @param $id
      * @Route("/edit_store_form/{id}", name="edit_store_form")
+     *
      * @return Response
      */
     public function editStoreFormAction($id)
     {
         $storesRepo = $this->getDoctrine()->getRepository(Store::class);
-        $stores = $storesRepo->find($id);
+        $stores     = $storesRepo->find($id);
 
         return $this->render('InventoryBundle:Default:edit.store.form.html.twig', [
-            'stores'=> $stores
+            'stores' => $stores,
         ]);
 
     }
@@ -194,16 +208,17 @@ class DefaultController extends Controller
      * @param Request $request
      * @param id
      * @Route("/save_store_edit/{id}", name="save_store_edit")
+     *
      * @return RedirectResponse
      */
     public function saveStoreEdit(Request $request, $id)
     {
         $storeRepo = $this->getDoctrine()->getRepository(Store::class);
-        $store = $storeRepo->find($id);
+        $store     = $storeRepo->find($id);
 
-        $storeName = $request->get('store_name');
-        $location = $request->get('location');
-        $manager = $request->get('manager');
+        $storeName   = $request->get('store_name');
+        $location    = $request->get('location');
+        $manager     = $request->get('manager');
         $phoneNumber = $request->get('phone');
 
         $store->setStoreName($storeName);

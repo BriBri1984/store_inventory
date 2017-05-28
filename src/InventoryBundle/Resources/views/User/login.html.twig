@@ -2,6 +2,10 @@
 
 {% block title %}InventoryBundle:User:login{% endblock %}
 
-{% block body %}
-<h1>Welcome to the User:login page</h1>
+{% block content %}
+ <form method="post" action="{{ path('login_Process') }}">
+        <input type="text" name="username" placeholder="Enter Username"/>
+        <input type="text" name="password" placeholder="Enter Password"/>
+        <input type="submit" value="Login Account"/>
+    </form>
 {% endblock %}

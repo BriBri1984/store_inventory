@@ -23,11 +23,12 @@ class UserController extends Controller
     /**
      * @param Request $request
      * @Route ("/register_process", name="register_process")
+     *
      * @return Response
      */
     public function processRegistrationAction(Request $request)
     {
-        $userName = $request->get('username');
+        $userName     = $request->get('username');
         $userPassword = $request->get('password');
 
         $user = new User();
@@ -50,6 +51,43 @@ class UserController extends Controller
         return $this->render('InventoryBundle:User:login.html.twig', [
             // ...
         ]);
+    }
+
+    /**
+     * @param Request $request
+     * @Route("/loginProcess", name="login_Process")
+     */
+    public function loginProcessAction(Request $request)
+    {
+        //Collect the username and password
+        $userName     = $request->get('username');
+        $userPassword = $request->get('password');
+
+        //find a user entity that matches this password
+        $user = $this->getDoctrine()->getRepository('InventoryBundle:User')->findOneBy(
+            [
+                'username' => $userName,
+                'password' => $userPassword
+            ]
+        );
+
+        if(empty($user)){
+            die('Not auth');
+        }
+
+        $session = $this->get('session');
+        $session->set('logged_in', true);
+        $session->set('user_id', $user->getId());
+
+        $session->save();
+
+        return $this->redirectToRoute('inventory_page');
+
+        //save their information in session
+
+        // redirect them to the homepage
+
+
     }
 
 }
