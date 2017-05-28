@@ -1,4 +1,9 @@
-store_inventory
+Inventory Manager
 ===============
 
-A Symfony project created on May 9, 2017, 4:16 pm.
+#### How to reset database
+```$xslt
+./bin/console doctrine:database:drop --force
+./bin/console doctrine:database:create
+./bin/console doctrine:migrations:migrate --no-interaction
+```

@@ -39,6 +39,7 @@
                     <th>Location</th>
                     <th>Manager</th>
                     <th>Phone Number</th>
+                    <th>Edit</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -49,6 +50,9 @@
                         <td>{{ store.location }}</td>
                         <td>{{ store.manager }}</td>
                         <td>{{ store.phoneNumber }}</td>
+                        <td>
+                            <a href="{{ path('edit_store_form', {"id": store.id}) }}" class="btn btn-xs btn-primary"><span class="fa fa-pencil"></span></a>
+                        </td>
                     </tr>
                 {% endfor %}
 

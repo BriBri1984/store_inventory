@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+
+<div class="container">
+    <h1>Inventory Edit</h1>
+    <hr/>
+
+    <form class="form-inline" method="post" action="{{ path('save_inventory_edit', {"inventoryId": inventory.id }) }}">
+        <label class="mr-sm-2" for="inlineFormCustomSelect">Add Item</label>
+
+        <label class="sr-only" for="inlineFormInput">Name</label>
+        <input type="text" class="form-control mb-4 mr-sm-4 mb-sm-0" id="inlineFormInput" placeholder="Product name"
+               name="product_name" value="{{ inventory.productName }}">
+
+        <label class="sr-only" for="inlineFormInput">Cost</label>
+        <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" placeholder="Cost"
+               name="cost" value="{{ inventory.cost }}">
+
+        <label class="sr-only" for="inlineFormInput">Quantity</label>
+        <input type="number" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" placeholder="Quantity"
+               name="quantity" value="{{ inventory.quantity }}">
+
+        <select name="store_id_from_frontend_form" class="form-control">
+            <option value="">Select Store</option>
+            {% for store in stores %}
+
+                {% if inventory.store == store %}
+                    <option value="{{ store.id }}" selected="selected">{{ store.storeName }}</option>
+                {% else %}
+                    <option value="{{ store.id }}">{{ store.storeName }}</option>
+                {% endif %}
+
+            {% endfor %}
+        </select>
+
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{% endblock %}
