@@ -90,4 +90,19 @@ class UserController extends Controller
 
     }
 
+
+    /**
+     * @param Request $request
+     * @Route("/logoutProcess", name="logout_Process")
+     */
+    public function logoutProcessAction(Request $request)
+    {
+        $session = $this->get('session');
+
+        $session->remove('user_id');
+        $session->clear();
+
+        return $this->redirectToRoute('inventory_page');
+    }
+
 }
