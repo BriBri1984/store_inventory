@@ -99,6 +99,7 @@ class UserController extends Controller
     {
         $session = $this->get('session');
 
+        $session->remove('logged_in');
         $session->remove('user_id');
         $session->clear();
 

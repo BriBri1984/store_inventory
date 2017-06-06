@@ -54,7 +54,7 @@
             </div>
         </ul>
         <ul class="nav navbar-nav">
-            {% if user is defined %}
+            {% if user.username is defined %}
                 <li class="nav-item">
 
                     <a class="nav-link" href="{{ path('logout_Process') }}">Welcome {{ user.username }} LOGOUT </a>
