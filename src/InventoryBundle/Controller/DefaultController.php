@@ -29,10 +29,18 @@ class DefaultController extends Controller
             }
         }
 
-        $inventoryRepository = $this->getDoctrine()->getRepository(Inventory::class);
-        $storeRepository     = $this->getDoctrine()->getRepository(Store::class);
-        $stores              = $storeRepository->findAll();
-        $items               = $inventoryRepository->findAll();
+        $search = $request->query->get('q');
+        if ($search) {
+
+        }else{
+            $inventoryRepository = $this->getDoctrine()->getRepository(Inventory::class);
+            $storeRepository     = $this->getDoctrine()->getRepository(Store::class);
+            $stores              = $storeRepository->findAll();
+            $items               = $inventoryRepository->findAll();
+        }
+
+
+
 
 
         return $this->render('InventoryBundle:Default:index.html.twig', [

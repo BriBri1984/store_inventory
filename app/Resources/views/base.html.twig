@@ -69,6 +69,10 @@
             {% endif %}
 
         </ul>
+        <form class="form-inline my-2 my-lg-0" role="search" action="{{ path('create_inventory') }}">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search" name="q">
+            <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
+        </form>
     </div>
 </nav>
 

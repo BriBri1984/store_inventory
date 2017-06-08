@@ -3,6 +3,7 @@
 namespace InventoryBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * Class InventoryRepository
@@ -10,5 +11,12 @@ use Doctrine\ORM\EntityRepository;
  */
 class InventoryRepository extends EntityRepository
 {
-
+    public function search($term)
+    {
+        return $this->createQueryBuilder('inventory')
+            ->andWhere('inventory.productName LIKE :searchTerm')
+            ->setParameter('searchTerm', '%'.$term.'%' )
+            ->getQuery()
+            ->execute();
+    }
 }
