@@ -15,9 +15,9 @@ class DefaultController extends Controller
 {
 
     /**
-     * @Route("/", name="inventory_page")
+     * @Route("/{search}", name="inventory_page")
      */
-    public function inventoryPageAction()
+    public function inventoryPageAction(Request $request)
     {
         $user    = null;
         $session = $this->get('session');
@@ -31,8 +31,19 @@ class DefaultController extends Controller
 
         $inventoryRepository = $this->getDoctrine()->getRepository(Inventory::class);
         $storeRepository     = $this->getDoctrine()->getRepository(Store::class);
-        $stores              = $storeRepository->findAll();
-        $items               = $inventoryRepository->findAll();
+
+
+        $search = $request->query->get('q');
+        if ($search) {
+            $stores = $storeRepository->findAll();
+            $items  = $inventoryRepository->search($search);
+        }else{
+            $stores              = $storeRepository->findAll();
+            $items               = $inventoryRepository->findAll();
+        }
+
+
+
 
 
         return $this->render('InventoryBundle:Default:index.html.twig', [
@@ -113,12 +124,23 @@ class DefaultController extends Controller
      */
     public function storesPageAction()
     {
+        $user    = null;
+        $session = $this->get('session');
+
+        if ($session->get('logged_in') == true) {
+            $userId = $session->get('user_id');
+            if (!empty($userId)) {
+                $user = $this->getDoctrine()->getRepository(User::class)->find($userId);
+            }
+        }
+
         $storeRepository = $this->getDoctrine()->getRepository(Store::class);
 
         $stores = $storeRepository->findAll();
 
         return $this->render('InventoryBundle:Default:stores.html.twig', [
             'stores' => $stores,
+            'user'   => $user,
         ]);
     }
 
@@ -138,6 +160,16 @@ class DefaultController extends Controller
      */
     public function editInventoryFormAction($id)
     {
+        $user    = null;
+        $session = $this->get('session');
+
+        if ($session->get('logged_in') == true) {
+            $userId = $session->get('user_id');
+            if (!empty($userId)) {
+                $user = $this->getDoctrine()->getRepository(User::class)->find($userId);
+            }
+        }
+
         $storeRepository = $this->getDoctrine()->getRepository(Store::class);
         $stores          = $storeRepository->findAll();
 
@@ -147,6 +179,7 @@ class DefaultController extends Controller
         return $this->render('@Inventory/Default/edit.inventory.form.html.twig', [
             'stores'    => $stores,
             'inventory' => $inventory,
+            'user'      => $user,
         ]);
     }
 
@@ -195,11 +228,22 @@ class DefaultController extends Controller
      */
     public function editStoreFormAction($id)
     {
+        $user    = null;
+        $session = $this->get('session');
+
+        if ($session->get('logged_in') == true) {
+            $userId = $session->get('user_id');
+            if (!empty($userId)) {
+                $user = $this->getDoctrine()->getRepository(User::class)->find($userId);
+            }
+        }
+
         $storesRepo = $this->getDoctrine()->getRepository(Store::class);
         $stores     = $storesRepo->find($id);
 
         return $this->render('InventoryBundle:Default:edit.store.form.html.twig', [
             'stores' => $stores,
+            'user'   => $user,
         ]);
 
     }
