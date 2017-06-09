@@ -17,7 +17,7 @@ class DefaultController extends Controller
     /**
      * @Route("/", name="inventory_page")
      */
-    public function inventoryPageAction()
+    public function inventoryPageAction(Request $request)
     {
         $user    = null;
         $session = $this->get('session');
@@ -29,12 +29,15 @@ class DefaultController extends Controller
             }
         }
 
+        $inventoryRepository = $this->getDoctrine()->getRepository(Inventory::class);
+        $storeRepository     = $this->getDoctrine()->getRepository(Store::class);
+
+
         $search = $request->query->get('q');
         if ($search) {
-
+            $stores = $storeRepository->findAll();
+            $items  = $inventoryRepository->search($search);
         }else{
-            $inventoryRepository = $this->getDoctrine()->getRepository(Inventory::class);
-            $storeRepository     = $this->getDoctrine()->getRepository(Store::class);
             $stores              = $storeRepository->findAll();
             $items               = $inventoryRepository->findAll();
         }
