@@ -11,11 +11,52 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Class DefaultController
+ * @package InventoryBundle\Controller
+ */
 class DefaultController extends Controller
 {
 
     /**
-     * @Route("/", name="inventory_page")
+     * @Route("/", name="home_page")
+     */
+    public function homePageAction()
+    {
+        $user    = null;
+        $session = $this->get('session');
+
+        if ($session->get('logged_in') == true) {
+            $userId = $session->get('user_id');
+            if (!empty($userId)) {
+                $user = $this->getDoctrine()->getRepository(User::class)->find($userId);
+            }
+        }
+
+        return $this->render('@Inventory/Default/home.html.twig', [
+            'user' => $user,
+        ]);
+    }
+
+    /**
+     * @Route("/search", name="search_page")
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function searchAction(Request $request)
+    {
+        $query = $request->query->get('q');
+
+        $items = $this->getDoctrine()->getRepository(Inventory::class)->search($query);
+
+        return $this->render('@Inventory/Search/search.results.html.twig', [
+            'items' => $items,
+        ]);
+    }
+
+    /**
+     * @Route("/inventory", name="inventory_page")
      */
     public function inventoryPageAction()
     {
@@ -33,7 +74,6 @@ class DefaultController extends Controller
         $storeRepository     = $this->getDoctrine()->getRepository(Store::class);
         $stores              = $storeRepository->findAll();
         $items               = $inventoryRepository->findAll();
-
 
         return $this->render('InventoryBundle:Default:index.html.twig', [
             'items'  => $items,
