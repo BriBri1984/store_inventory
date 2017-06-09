@@ -15,7 +15,7 @@ class DefaultController extends Controller
 {
 
     /**
-     * @Route("/", name="inventory_page")
+     * @Route("/{search}", name="inventory_page")
      */
     public function inventoryPageAction(Request $request)
     {

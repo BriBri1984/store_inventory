@@ -14,8 +14,7 @@ class InventoryRepository extends EntityRepository
     public function search($term)
     {
         return $this->createQueryBuilder('inventory')
-            ->andWhere('inventory.productName LIKE :searchTerm
-                OR store.inventory LIKE :searchTerm')
+            ->andWhere('inventory.productName LIKE :searchTerm')
             ->leftJoin('inventory.store','store')
             ->addSelect('store')
             ->setParameter('searchTerm', '%'.$term.'%' )
