@@ -8,6 +8,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Class UserController
+ * @package InventoryBundle\Controller
+ */
 class UserController extends Controller
 {
     /**
@@ -15,9 +19,7 @@ class UserController extends Controller
      */
     public function registerAction()
     {
-        return $this->render('InventoryBundle:User:register.html.twig', [
-            // ...
-        ]);
+        return $this->render('InventoryBundle:User:register.html.twig');
     }
 
     /**
@@ -44,20 +46,19 @@ class UserController extends Controller
         return $this->redirectToRoute('login_form');
     }
 
-
     /**
      * @Route("/login", name="login_form")
      */
     public function loginAction()
     {
-        return $this->render('InventoryBundle:User:login.html.twig', [
-            // ...
-        ]);
+        return $this->render('InventoryBundle:User:login.html.twig');
     }
 
     /**
      * @param Request $request
      * @Route("/loginProcess", name="login_Process")
+     *
+     * @return Response
      */
     public function loginProcessAction(Request $request)
     {
@@ -69,11 +70,11 @@ class UserController extends Controller
         $user = $this->getDoctrine()->getRepository('InventoryBundle:User')->findOneBy(
             [
                 'username' => $userName,
-                'password' => $userPassword
+                'password' => $userPassword,
             ]
         );
 
-        if(empty($user)){
+        if (empty($user)) {
             die('Not auth');
         }
 
@@ -86,17 +87,13 @@ class UserController extends Controller
         $this->addFlash('success','User logged in!');
 
         return $this->redirectToRoute('inventory_page');
-
-        //save their information in session
-
-        // redirect them to the homepage
-
-
     }
 
     /**
      * @param Request $request
      * @Route("/logoutProcess", name="logout_Process")
+     *
+     * @return Response
      */
     public function logoutProcessAction(Request $request)
     {

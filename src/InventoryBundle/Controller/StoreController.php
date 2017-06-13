@@ -1,8 +1,6 @@
 <?php
 
-
 namespace InventoryBundle\Controller;
-
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -12,6 +10,10 @@ use InventoryBundle\Entity\Store;
 use Symfony\Component\HttpFoundation\Response;
 use InventoryBundle\Entity\User;
 
+/**
+ * Class StoreController
+ * @package InventoryBundle\Controller
+ */
 class StoreController extends Controller
 {
     /**
