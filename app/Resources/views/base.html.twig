@@ -77,6 +77,12 @@
 </nav>
 
 <main>
+    {% for msg in app.session.flashBag.get('success') %}
+        <div class="alert alert-info" role="alert">
+            {{ msg }}
+        </div>
+    {% endfor %}
+
     {% block content %}
     {% endblock content %}
 </main>
