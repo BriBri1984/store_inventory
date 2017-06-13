@@ -1,8 +1,6 @@
 <?php
 
-
 namespace InventoryBundle\Controller;
-
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -13,6 +11,10 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Class InventoryController
+ * @package InventoryBundle\Controller
+ */
 class InventoryController extends Controller
 {
     /**
@@ -72,9 +74,8 @@ class InventoryController extends Controller
 
     /**
      * @Route ("/edit_inventory_form/{id}", name="edit_inventory_form")
+     * @param int $id The numeric identifier for a specific inventory record
      * @return Response
-     *
-     *
      */
     public function editInventoryFormAction($id)
     {
