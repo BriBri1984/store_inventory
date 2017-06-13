@@ -41,6 +41,8 @@ class UserController extends Controller
         $em->persist($user);
         $em->flush();
 
+        $this->addFlash('success','User Created!');
+
         return $this->redirectToRoute('login_form');
     }
 
@@ -82,6 +84,8 @@ class UserController extends Controller
 
         $session->save();
 
+        $this->addFlash('success','User logged in!');
+
         return $this->redirectToRoute('inventory_page');
     }
 
@@ -97,6 +101,8 @@ class UserController extends Controller
         $session->remove('logged_in');
         $session->remove('user_id');
         $session->clear();
+
+        $this->addFlash('success','User logged out!');
 
         return $this->redirectToRoute('inventory_page');
     }
