@@ -3,10 +3,15 @@
 namespace InventoryBundle\Controller;
 
 use InventoryBundle\Entity\User;
+use InventoryBundle\Form\LoginForm;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Bundle\SecurityBundle\DependencyInjection\Security\Factory\FormLoginFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+
+
 
 /**
  * Class UserController
@@ -22,13 +27,13 @@ class UserController extends Controller
         return $this->render('InventoryBundle:User:register.html.twig');
     }
 
-    /**
+ /*/**
      * @param Request $request
      * @Route ("/register_process", name="register_process")
      *
      * @return Response
      */
-    public function processRegistrationAction(Request $request)
+   /* public function processRegistrationAction(Request $request)
     {
         $userName     = $request->get('username');
         $userPassword = $request->get('password');
@@ -44,14 +49,32 @@ class UserController extends Controller
         $this->addFlash('success','User Created!');
 
         return $this->redirectToRoute('login_form');
-    }
+    }*/
 
     /**
      * @Route("/login", name="login_form")
+     * @param Request $request
+     * @return Response
      */
-    public function loginAction()
+    public function loginAction(Request $request)
     {
-        return $this->render('InventoryBundle:User:login.html.twig');
+        $authenticationUtils = $this->get('security.authentication_utils');
+
+        // get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
+
+        // last username entered by the user
+        $lastUsername = $authenticationUtils->getLastUsername();
+
+        $form = $this->createForm(LoginForm::class, [
+            '_username' => $lastUsername
+        ]);
+
+        return $this->render('InventoryBundle:User:login.html.twig', [
+            'form' => $form->createView(),
+            'error'         => $error,
+        ]);
+
     }
 
     /**

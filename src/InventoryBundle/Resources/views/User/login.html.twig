@@ -3,9 +3,31 @@
 {% block title %}InventoryBundle:User:login{% endblock %}
 
 {% block content %}
- <form method="post" action="{{ path('login_Process') }}">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <h1>Login</h1>
+                {% if error %}
+                    <div class="alert-danger">
+                        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    </div>
+                {% endif %}
+
+ {#<form method="post" action="{{ path('login_Process') }}">
         <input type="text" name="username" placeholder="Enter Username"/>
         <input type="text" name="password" placeholder="Enter Password"/>
         <input type="submit" value="Login Account"/>
-    </form>
+    </form>#}
+
+                {{ form_start(form) }}
+                    {{ form_row(form._username) }}
+                    {{ form_row(form._password) }}
+
+
+                    <button type="submit" class="btn btn-primary">Login</button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
 {% endblock %}
