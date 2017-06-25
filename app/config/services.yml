@@ -11,5 +11,4 @@ services:
     app.security.login_form_authenticator:
 
         class: InventoryBundle\Security\LoginFormAuthenticator
-
         autowire: true

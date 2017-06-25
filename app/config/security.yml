@@ -15,7 +15,7 @@ security:
 
         main:
             anonymous: ~
-              guard:
+            guard:
                 authenticators:
                   - app.security.login_form_authenticator
 
