@@ -77,13 +77,13 @@ class UserController extends Controller
 
     }
 
-    /**
+    /*/**
      * @param Request $request
      * @Route("/loginProcess", name="login_Process")
      *
      * @return Response
      */
-    public function loginProcessAction(Request $request)
+    /*public function loginProcessAction(Request $request)
     {
         //Collect the username and password
         $userName     = $request->get('username');
@@ -110,6 +110,15 @@ class UserController extends Controller
         $this->addFlash('success','User logged in!');
 
         return $this->redirectToRoute('inventory_page');
+    }*/
+
+    /**
+     * @Route("/logout", name="logout")
+     */
+    public function logoutAction()
+    {
+        throw new \Exception('this should not be reached!');
+
     }
 
     /**

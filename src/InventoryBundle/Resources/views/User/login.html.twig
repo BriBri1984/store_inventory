@@ -9,7 +9,7 @@
             <div class="col-sm-12">
                 <h1>Login</h1>
                 {% if error %}
-                    <div class="alert-danger">
+                    <div class="alert alert-danger">
                         <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
                     </div>
                 {% endif %}
