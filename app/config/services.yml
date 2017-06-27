@@ -12,3 +12,9 @@ services:
 
         class: InventoryBundle\Security\LoginFormAuthenticator
         autowire: true
+
+    app.doctrine.hash_password_listner:
+        class: InventoryBundle\Doctrine\HashPasswordListener
+        autowire: true
+        tags:
+            - { name: doctrine.event_subscriber }

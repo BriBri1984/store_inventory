@@ -36,6 +36,8 @@ class User implements UserInterface
      */
     private $password;
 
+    private $plainPassword;
+
 
     /**
      * Get id
@@ -82,7 +84,7 @@ class User implements UserInterface
     {
         $this->password = $password;
 
-        return $this;
+
     }
 
     /**
@@ -102,12 +104,31 @@ class User implements UserInterface
 
     public function getSalt()
     {
-        // TODO: Implement getSalt() method.
+
     }
 
     public function eraseCredentials()
     {
-        // TODO: Implement eraseCredentials() method.
+        $this->plainPassword = null;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * @param mixed $plainPassword
+     */
+    public function setPlainPassword($plainPassword)
+    {
+        $this->plainPassword = $plainPassword;
+        $this->password = null;
+    }
+
+
 }
 
