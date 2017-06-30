@@ -1,4 +1,18 @@
 services:
-#    inventory.example:
-#        class: InventoryBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
+    service.user:
+        class: InventoryBundle\Service\UserService
+        arguments:
+            - "@doctrine.orm.default_entity_manager"
+            - "@security.token_storage"
+
+    provider.login:
+        class: InventoryBundle\Provider\LoginUserProvider
+        arguments:
+            - "@service.user"
+
+    guard.login:
+        class: InventoryBundle\Security\Guard\LoginGuard
+        arguments:
+            - "@security.encoder_factory"
+            - "@router"
+            - "@service.user"

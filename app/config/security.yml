@@ -2,11 +2,15 @@
 # http://symfony.com/doc/current/security.html
 security:
 
+    encoders:
+        InventoryBundle\Entity\User: bcrypt
+
     # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
-        in_memory:
-            memory: ~
-
+#        our_users:
+#          entity: { class: InventoryBundle\Entity\User, property: username }
+        user_login:
+            id: provider.login
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
@@ -15,10 +19,11 @@ security:
 
         main:
             anonymous: ~
-            # activate different ways to authenticate
+            form_login:
+                login_path: login_form
+                check_path: login_form
 
-            # http://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-            #http_basic: ~
-
-            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
-            #form_login: ~
+    access_control:
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, roles: ROLE_USER }

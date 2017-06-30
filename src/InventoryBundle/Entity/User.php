@@ -3,6 +3,7 @@
 namespace InventoryBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * User
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="InventoryBundle\Repository\UserRepository")
  */
-class User
+class User implements UserInterface
 {
     /**
      * @var int
@@ -34,6 +35,8 @@ class User
      * @ORM\Column(name="password", type="string", length=255)
      */
     private $password;
+
+    private $plainPassword;
 
 
     /**
@@ -81,7 +84,7 @@ class User
     {
         $this->password = $password;
 
-        return $this;
+
     }
 
     /**
@@ -93,5 +96,39 @@ class User
     {
         return $this->password;
     }
+
+    public function getRoles()
+    {
+        return ['ROLE_USER'];
+    }
+
+    public function getSalt()
+    {
+        return 'my_constant_salt';
+    }
+
+    public function eraseCredentials()
+    {
+        $this->plainPassword = null;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * @param mixed $plainPassword
+     */
+    public function setPlainPassword($plainPassword)
+    {
+        $this->plainPassword = $plainPassword;
+        $this->password = null;
+    }
+
+
 }
 

@@ -54,10 +54,11 @@
             </div>
         </ul>
         <ul class="nav navbar-nav">
-            {% if user is defined and user is not null %}
+            {% if is_granted('ROLE_USER') %}
                 <li class="nav-item">
 
-                    <a class="nav-link" href="{{ path('logout_Process') }}">Welcome {{ user.username }} LOGOUT </a>
+                    <a class="nav-link" href="{{ path('logout') }}">Welcome {# Error: Impossible to access attribute ("username") on a null variable.
+{{ user.username }}#} LOGOUT </a>
                 </li>
             {% else %}
                 <li class="nav-item">
