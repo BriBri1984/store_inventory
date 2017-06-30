@@ -7,9 +7,10 @@ security:
 
     # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
-        our_users:
-          entity: { class: InventoryBundle\Entity\User, property: username }
-
+#        our_users:
+#          entity: { class: InventoryBundle\Entity\User, property: username }
+        user_login:
+            id: provider.login
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
@@ -18,18 +19,11 @@ security:
 
         main:
             anonymous: ~
-            guard:
-                authenticators:
-                  - app.security.login_form_authenticator
+            form_login:
+                login_path: login_form
+                check_path: login_form
 
-            logout:
-                path: /logout
-
-
-            # activate different ways to authenticate
-
-            # http://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-                        #http_basic: ~
-
-                        # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
-                        #form_login: ~
+    access_control:
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, roles: ROLE_USER }
