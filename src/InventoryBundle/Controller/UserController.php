@@ -15,78 +15,24 @@ use Symfony\Component\HttpFoundation\Response;
 class UserController extends Controller
 {
     /**
-     * @Route("/register", name="register_form")
-     */
-    public function registerAction()
-    {
-        return $this->render('InventoryBundle:User:register.html.twig');
-    }
-
-    /**
-     * @param Request $request
-     * @Route ("/register_process", name="register_process")
-     *
-     * @return Response
-     */
-    public function processRegistrationAction(Request $request)
-    {
-        $userName     = $request->get('username');
-        $userPassword = $request->get('password');
-
-        $user = new User();
-        $user->setUsername($userName);
-        $user->setPassword($userPassword);
-
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($user);
-        $em->flush();
-
-        $this->addFlash('success','User Created!');
-
-        return $this->redirectToRoute('login_form');
-    }
-
-    /**
-     * @Route("/login", name="login_form")
+     * @Route("/login", name="login")
      */
     public function loginAction()
     {
-        return $this->render('InventoryBundle:User:login.html.twig');
-    }
+        $authUtils = $this->get('security.authentication_utils');
 
-    /**
-     * @param Request $request
-     * @Route("/loginProcess", name="login_Process")
-     *
-     * @return Response
-     */
-    public function loginProcessAction(Request $request)
-    {
-        //Collect the username and password
-        $userName     = $request->get('username');
-        $userPassword = $request->get('password');
+        // get the login error if there is one
+        $error = $authUtils->getLastAuthenticationError();
 
-        //find a user entity that matches this password
-        $user = $this->getDoctrine()->getRepository('InventoryBundle:User')->findOneBy(
-            [
-                'username' => $userName,
-                'password' => $userPassword,
-            ]
-        );
+        // last username entered by the user
+        $lastUsername = $authUtils->getLastUsername();
 
-        if (empty($user)) {
-            die('Not auth');
-        }
+        dump($this->get('session')->all());
 
-        $session = $this->get('session');
-        $session->set('logged_in', true);
-        $session->set('user_id', $user->getId());
-
-        $session->save();
-
-        $this->addFlash('success','User logged in!');
-
-        return $this->redirectToRoute('inventory_page');
+        return $this->render('InventoryBundle:User:login.html.twig', [
+            'last_username' => $lastUsername,
+            'error'         => $error,
+        ]);
     }
 
     /**
@@ -102,7 +48,7 @@ class UserController extends Controller
         $session->remove('user_id');
         $session->clear();
 
-        $this->addFlash('success','User logged out!');
+        $this->addFlash('success', 'User logged out!');
 
         return $this->redirectToRoute('inventory_page');
     }

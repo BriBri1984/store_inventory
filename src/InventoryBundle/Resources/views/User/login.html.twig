@@ -3,7 +3,14 @@
 {% block title %}InventoryBundle:User:login{% endblock %}
 
 {% block content %}
- <form method="post" action="{{ path('login_Process') }}">
+
+    {% if app.user %}
+        Logged in
+    {% else %}
+        Not logged in
+    {% endif %}
+
+    <form method="post" action="{{ path('login') }}">
         <input type="text" name="username" placeholder="Enter Username"/>
         <input type="text" name="password" placeholder="Enter Password"/>
         <input type="submit" value="Login Account"/>
