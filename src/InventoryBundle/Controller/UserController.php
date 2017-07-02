@@ -27,20 +27,20 @@ class UserController extends Controller
         return $this->render('InventoryBundle:User:register.html.twig');
     }
 
- /*/**
+ /**
      * @param Request $request
      * @Route ("/register_process", name="register_process")
      *
      * @return Response
      */
-   /* public function processRegistrationAction(Request $request)
+    public function processRegistrationAction(Request $request)
     {
         $userName     = $request->get('username');
-        $userPassword = $request->get('password');
+        $userPassword = $request->get('plainPassword');
 
         $user = new User();
         $user->setUsername($userName);
-        $user->setPassword($userPassword);
+        $user->setPlainPassword($userPassword);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($user);
@@ -49,7 +49,7 @@ class UserController extends Controller
         $this->addFlash('success','User Created!');
 
         return $this->redirectToRoute('login_form');
-    }*/
+    }
 
     /**
      * @Route("/login", name="login_form")
