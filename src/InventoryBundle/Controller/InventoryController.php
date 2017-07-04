@@ -3,6 +3,7 @@
 namespace InventoryBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use InventoryBundle\Entity\Inventory;
 use InventoryBundle\Entity\Store;
@@ -18,11 +19,12 @@ use Symfony\Component\HttpFoundation\Response;
 class InventoryController extends Controller
 {
     /**
+     * @Security("is_granted('ROLE_ADMIN')")
      * @Route("/inventory", name="inventory_page")
      */
     public function inventoryPageAction()
     {
-        $user    = null;
+        /*$user    = null;
         $session = $this->get('session');
 
         if ($session->get('logged_in') == true) {
@@ -30,7 +32,9 @@ class InventoryController extends Controller
             if (!empty($userId)) {
                 $user = $this->getDoctrine()->getRepository(User::class)->find($userId);
             }
-        }
+        }*/
+
+
 
         $inventoryRepository = $this->getDoctrine()->getRepository(Inventory::class);
         $storeRepository     = $this->getDoctrine()->getRepository(Store::class);
@@ -79,7 +83,7 @@ class InventoryController extends Controller
      */
     public function editInventoryFormAction($id)
     {
-        $user    = null;
+        /*$user    = null;
         $session = $this->get('session');
 
         if ($session->get('logged_in') == true) {
@@ -87,7 +91,7 @@ class InventoryController extends Controller
             if (!empty($userId)) {
                 $user = $this->getDoctrine()->getRepository(User::class)->find($userId);
             }
-        }
+        }*/
         $storeRepository = $this->getDoctrine()->getRepository(Store::class);
         $stores          = $storeRepository->findAll();
 

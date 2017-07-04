@@ -3,12 +3,15 @@
 namespace InventoryBundle\Controller;
 
 use InventoryBundle\Entity\User;
+use InventoryBundle\Form\EditUserForm;
 use InventoryBundle\Form\LoginForm;
+use InventoryBundle\InventoryBundle;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\SecurityBundle\DependencyInjection\Security\Factory\FormLoginFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 
@@ -111,6 +114,23 @@ class UserController extends Controller
 
         return $this->redirectToRoute('inventory_page');
     }*/
+
+    /**
+     * @Route("/editRole", name="edit_Role")
+     */
+    public function editRoleAction(Request $request)
+    {
+        $roles = $request->get('roles');
+
+        $form = $this->createForm(EditUserForm::class, [
+            'roles' => $roles
+        ]);
+
+        return $this->render('InventoryBundle:User:edit.role.html.twig', [
+            'form' => $form->createView(),
+            'roles' => $roles,
+        ]);
+    }
 
     /**
      * @Route("/logout", name="logout")

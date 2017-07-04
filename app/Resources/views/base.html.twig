@@ -32,6 +32,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="/stores">Stores</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('edit_Role') }}">Edit Role</a>
+            </li>
             <div class="btn-group">
                 <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
@@ -57,7 +60,7 @@
             {% if is_granted('ROLE_USER') %}
                 <li class="nav-item">
 
-                    <a class="nav-link" href="{{ path('logout') }}">Welcome {# Error: Impossible to access attribute ("username") on a null variable.
+                    <a class="nav-link" href="{{ path('logout') }}">Welcome {# Error: Can't access attribute ("username") on a null variable.
 {{ user.username }}#} LOGOUT </a>
                 </li>
             {% else %}
