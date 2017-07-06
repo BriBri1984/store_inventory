@@ -118,9 +118,12 @@ class UserController extends Controller
     /**
      * @Route("/editRole", name="edit_Role")
      */
-    public function editRoleAction(Request $request)
+    public function editRolesAction(Request $request)
     {
-        $roles = $request->get('roles');
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository(User::class);
+
+        $role          = $repo->find($roles);
 
         $form = $this->createForm(EditUserForm::class, [
             'roles' => $roles

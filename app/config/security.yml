@@ -5,6 +5,9 @@ security:
     encoders:
         InventoryBundle\Entity\User: bcrypt
 
+    role_hierarchy:
+        ROLE_USER: ROLE_ADMIN
+
     # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
         our_users:

@@ -44,7 +44,6 @@ class InventoryController extends Controller
         return $this->render('InventoryBundle:Inventory:index.html.twig', [
             'items'  => $items,
             'stores' => $stores,
-            'user'   => $user,
         ]);
     }
 
