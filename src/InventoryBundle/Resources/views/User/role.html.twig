@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+
+    <div class="container">
+        <h1>Role Manager</h1>
+        <hr/>
+
+        <table class="table">
+            <thead class="thead-inverse">
+            <tr>
+                <th>#</th>
+                <th>User</th>
+                <th>Roles</th>
+                <th>Edit</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <th scope="row">{{ user.id }}</th>
+                        <td>{{ user.userName }}</td>
+                        <td>{{ user.roles|json_encode() }}</td>
+                        <td> <a href="{{ path('edit_Role', {"id": user.id}) }}" class="btn btn-xs btn-primary"><span class="fa fa-pencil"></span></a></td>
+                </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+
+    </div>
+{% endblock %}

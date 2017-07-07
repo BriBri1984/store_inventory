@@ -100,7 +100,6 @@ class InventoryController extends Controller
         return $this->render('@Inventory/Inventory/edit.inventory.form.html.twig', [
             'stores'    => $stores,
             'inventory' => $inventory,
-            'user'      => $user,
         ]);
     }
 

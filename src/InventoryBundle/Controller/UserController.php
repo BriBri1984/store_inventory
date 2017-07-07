@@ -116,23 +116,36 @@ class UserController extends Controller
     }*/
 
     /**
-     * @Route("/editRole", name="edit_Role")
+     * @Route("/role", name="role")
      */
-    public function editRolesAction(Request $request)
+    public function rolesAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-        $repo = $em->getRepository(User::class);
+        $userRepo = $this->getDoctrine()->getRepository(User::class);
+        $users = $userRepo->findAll();
 
-        $role          = $repo->find($roles);
 
-        $form = $this->createForm(EditUserForm::class, [
-            'roles' => $roles
+
+        return $this->render('InventoryBundle:User:role.html.twig', [
+            'users' => $users,
+        ]);
+    }
+
+    /**
+     * @Route("/editRole/{id}", name="edit_Role")
+     */
+    public function rolesEditAction($id)
+    {
+        $userRepository = $this->getDoctrine()->getRepository(User::class);
+        $user           = $userRepository->find($id);
+
+
+        $form = $this->createForm(EditUserForm::class);
+
+        return $this->render('@Inventory/User/edit.role.form.html.twig', [
+            'user' => $user,
+            'form' => $form,
         ]);
 
-        return $this->render('InventoryBundle:User:edit.role.html.twig', [
-            'form' => $form->createView(),
-            'roles' => $roles,
-        ]);
     }
 
     /**
