@@ -149,6 +149,26 @@ class UserController extends Controller
     }
 
     /**
+     * @Route("/saveRole/{id}", name="save_Role")
+     */
+    public function saveRolesAction(Request $request, $id)
+    {
+
+        $userRepo = $this->getDoctrine()->getRepository(User::class);
+        $user     = $userRepo->find($id);
+
+        $userRoles = $request->get('roles');
+
+        $user->setRoles($userRoles);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
+
+        return $this->redirectToRoute('role');
+    }
+
+    /**
      * @Route("/logout", name="logout")
      */
     public function logoutAction()
