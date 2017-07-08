@@ -118,7 +118,7 @@ class UserController extends Controller
     /**
      * @Route("/role", name="role")
      */
-    public function rolesAction(Request $request)
+    public function rolesAction()
     {
         $userRepo = $this->getDoctrine()->getRepository(User::class);
         $users = $userRepo->findAll();
@@ -133,7 +133,7 @@ class UserController extends Controller
     /**
      * @Route("/editRole/{id}", name="edit_Role")
      */
-    public function rolesEditAction($id)
+    public function editRolesAction($id)
     {
         $userRepository = $this->getDoctrine()->getRepository(User::class);
         $user           = $userRepository->find($id);
@@ -143,7 +143,7 @@ class UserController extends Controller
 
         return $this->render('@Inventory/User/edit.role.form.html.twig', [
             'user' => $user,
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
 
     }
