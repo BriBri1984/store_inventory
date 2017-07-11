@@ -2,10 +2,18 @@
 # http://symfony.com/doc/current/security.html
 security:
 
+    encoders:
+        InventoryBundle\Entity\User: bcrypt
+
+    role_hierarchy:
+        ROLE_USER: ROLE_ADMIN
+        ROLE_ADMIN: ROLE_MANAGER
+        ROLE_MANAGER: ROLE_ADMIN
+
     # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
-        in_memory:
-            memory: ~
+        our_users:
+            entity: { class: InventoryBundle\Entity\User, property: username }
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -15,10 +23,22 @@ security:
 
         main:
             anonymous: ~
+            guard:
+                authenticators:
+                  - app.security.login_form_authenticator
+
+            logout:
+                path: /logout
+
+
             # activate different ways to authenticate
 
             # http://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-            #http_basic: ~
+                        #http_basic: ~
 
-            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
-            #form_login: ~
+                        # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+                        #form_login: ~
+
+
+    access_control:
+        # - { path: ^/admin, roles: ROLE_USER }

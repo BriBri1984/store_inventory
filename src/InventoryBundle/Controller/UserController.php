@@ -3,10 +3,17 @@
 namespace InventoryBundle\Controller;
 
 use InventoryBundle\Entity\User;
+use InventoryBundle\Form\EditUserForm;
+use InventoryBundle\Form\LoginForm;
+use InventoryBundle\InventoryBundle;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Bundle\SecurityBundle\DependencyInjection\Security\Factory\FormLoginFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+
 
 /**
  * Class UserController
@@ -31,36 +38,56 @@ class UserController extends Controller
     public function processRegistrationAction(Request $request)
     {
         $userName     = $request->get('username');
-        $userPassword = $request->get('password');
+        $userPassword = $request->get('plainPassword');
 
         $user = new User();
         $user->setUsername($userName);
-        $user->setPassword($userPassword);
+        $user->setRoles(['ROLE_USER']);
+        $user->setPlainPassword($userPassword);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($user);
         $em->flush();
 
-        $this->addFlash('success','User Created!');
+        $this->addFlash('success', 'User Created!');
 
         return $this->redirectToRoute('login_form');
     }
 
     /**
      * @Route("/login", name="login_form")
+     * @param Request $request
+     *
+     * @return Response
      */
-    public function loginAction()
+    public function loginAction(Request $request)
     {
-        return $this->render('InventoryBundle:User:login.html.twig');
+        $authenticationUtils = $this->get('security.authentication_utils');
+
+        // get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
+
+        // last username entered by the user
+        $lastUsername = $authenticationUtils->getLastUsername();
+
+        $form = $this->createForm(LoginForm::class, [
+            '_username' => $lastUsername,
+        ]);
+
+        return $this->render('InventoryBundle:User:login.html.twig', [
+            'form'  => $form->createView(),
+            'error' => $error,
+        ]);
+
     }
 
-    /**
+    /*/**
      * @param Request $request
      * @Route("/loginProcess", name="login_Process")
      *
      * @return Response
      */
-    public function loginProcessAction(Request $request)
+    /*public function loginProcessAction(Request $request)
     {
         //Collect the username and password
         $userName     = $request->get('username');
@@ -87,24 +114,95 @@ class UserController extends Controller
         $this->addFlash('success','User logged in!');
 
         return $this->redirectToRoute('inventory_page');
+    }*/
+
+    /**
+     * @Route("/role", name="role")
+     */
+    public function rolesAction()
+    {
+        return $this->render('InventoryBundle:User:role.html.twig', [
+            'user' => $this->getUser(),
+        ]);
     }
 
     /**
-     * @param Request $request
-     * @Route("/logoutProcess", name="logout_Process")
-     *
-     * @return Response
+     * @Route("/editRole/{id}", name="edit_Role")
      */
-    public function logoutProcessAction(Request $request)
+    public function editRolesAction(Request $request, $id)
     {
-        $session = $this->get('session');
-        $session->remove('logged_in');
-        $session->remove('user_id');
-        $session->clear();
+        $userRepo = $this->getDoctrine()->getRepository(User::class);
+        $user     = $userRepo->find($id);
+        $form     = $this->createForm(EditUserForm::class, $user);
 
-        $this->addFlash('success','User logged out!');
+        $form->handleRequest($request);
 
-        return $this->redirectToRoute('inventory_page');
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+
+            $this->addFlash('task_success', 'Role Updated');
+
+            return $this->redirectToRoute('role', [
+                'user' => $user,
+                'form' => $form,
+            ]);
+        }
+
+        return $this->render('@Inventory/User/edit.role.form.html.twig', [
+            'form' => $form->createView(),
+            'user' => $user,
+        ]);
+
     }
+
+    /* /**
+      * @Route("/saveRole/{id}", name="save_Role")
+      */
+    /* public function saveRolesAction(Request $request, $id)
+     {
+
+         $userRepo  = $this->getDoctrine()->getRepository(User::class);
+         $user      = $userRepo->find($id);
+
+         $userRoles = $request->get('roles');
+
+         $user->setRoles($userRoles);
+
+         $em = $this->getDoctrine()->getManager();
+         $em->persist($user);
+         $em->flush();
+
+         return $this->redirectToRoute('role');
+     }*/
+
+    /**
+     * @Route("/logout", name="logout")
+     */
+    public function logoutAction()
+    {
+        throw new \Exception('this should not be reached!');
+
+    }
+
+    /* /**
+      * @param Request $request
+      * @Route("/logoutProcess", name="logout_Process")
+      *
+      * @return Response
+      */
+    /* public function logoutProcessAction(Request $request)
+     {
+         $session = $this->get('session');
+         $session->remove('logged_in');
+         $session->remove('user_id');
+         $session->clear();
+
+         $this->addFlash('success','User logged out!');
+
+         return $this->redirectToRoute('inventory_page');
+     }*/
 
 }
