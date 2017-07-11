@@ -133,29 +133,40 @@ class UserController extends Controller
     /**
      * @Route("/editRole/{id}", name="edit_Role")
      */
-    public function editRolesAction($id)
+    public function editRolesAction(Request $request, $id)
     {
-        $userRepository = $this->getDoctrine()->getRepository(User::class);
-        $user           = $userRepository->find($id);
-
-
+        $userRepo = $this->getDoctrine()->getRepository(User::class);
+        $user     = $userRepo->find($id);
         $form = $this->createForm(EditUserForm::class);
 
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $this->addFlash('task_success', 'Role Updated');
+
+            return $this->redirectToRoute('role', [
+                'user' => $user,
+                'form' => $form,
+            ]);
+            }
+
+
         return $this->render('@Inventory/User/edit.role.form.html.twig', [
-            'user' => $user,
+
             'form' => $form->createView(),
+            'user' => $user,
         ]);
 
     }
 
-    /**
+   /* /**
      * @Route("/saveRole/{id}", name="save_Role")
      */
-    public function saveRolesAction(Request $request, $id)
+   /* public function saveRolesAction(Request $request, $id)
     {
 
-        $userRepo = $this->getDoctrine()->getRepository(User::class);
-        $user     = $userRepo->find($id);
+        $userRepo  = $this->getDoctrine()->getRepository(User::class);
+        $user      = $userRepo->find($id);
 
         $userRoles = $request->get('roles');
 
@@ -166,7 +177,7 @@ class UserController extends Controller
         $em->flush();
 
         return $this->redirectToRoute('role');
-    }
+    }*/
 
     /**
      * @Route("/logout", name="logout")
@@ -177,13 +188,13 @@ class UserController extends Controller
 
     }
 
-    /**
+   /* /**
      * @param Request $request
      * @Route("/logoutProcess", name="logout_Process")
      *
      * @return Response
      */
-    public function logoutProcessAction(Request $request)
+   /* public function logoutProcessAction(Request $request)
     {
         $session = $this->get('session');
         $session->remove('logged_in');
@@ -193,6 +204,6 @@ class UserController extends Controller
         $this->addFlash('success','User logged out!');
 
         return $this->redirectToRoute('inventory_page');
-    }
+    }*/
 
 }

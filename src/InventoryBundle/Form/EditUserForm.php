@@ -3,9 +3,11 @@
 namespace InventoryBundle\Form;
 
 
+use InventoryBundle\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class EditUserForm extends AbstractType
 {
@@ -23,6 +25,13 @@ class EditUserForm extends AbstractType
             ])
             // other fields...
         ;
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'data_class' => User::class
+        ]);
     }
 }
 
