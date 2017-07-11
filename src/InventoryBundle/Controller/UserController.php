@@ -42,6 +42,7 @@ class UserController extends Controller
 
         $user = new User();
         $user->setUsername($userName);
+        $user->setRoles(['ROLE_USER']);
         $user->setPlainPassword($userPassword);
 
         $em = $this->getDoctrine()->getManager();
@@ -120,12 +121,8 @@ class UserController extends Controller
      */
     public function rolesAction()
     {
-        $userRepo = $this->getDoctrine()->getRepository(User::class);
-        $users    = $userRepo->findAll();
-
-
         return $this->render('InventoryBundle:User:role.html.twig', [
-            'users' => $users,
+            'user' => $this->getUser(),
         ]);
     }
 
@@ -136,10 +133,15 @@ class UserController extends Controller
     {
         $userRepo = $this->getDoctrine()->getRepository(User::class);
         $user     = $userRepo->find($id);
-        $form     = $this->createForm(EditUserForm::class);
+        $form     = $this->createForm(EditUserForm::class, $user);
 
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
 
             $this->addFlash('task_success', 'Role Updated');
 
@@ -149,9 +151,7 @@ class UserController extends Controller
             ]);
         }
 
-
         return $this->render('@Inventory/User/edit.role.form.html.twig', [
-
             'form' => $form->createView(),
             'user' => $user,
         ]);

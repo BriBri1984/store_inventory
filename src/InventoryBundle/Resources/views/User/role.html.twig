@@ -16,17 +16,17 @@
             </tr>
             </thead>
             <tbody>
-            {% for user in users %}
-                <tr>
-                    <th scope="row">{{ user.id }}</th>
-                        <td>{{ user.userName }}</td>
-                        <td>{{ user.roles|json_encode() }}</td>
-                        <td> <a href="{{ path('edit_Role', {"id": user.id}) }}" class="btn btn-xs btn-primary"><span class="fa fa-pencil"></span></a></td>
-                </tr>
-            {% endfor %}
+            <tr>
+                <th scope="row">{{ user.id }}</th>
+                <td>{{ user.userName }}</td>
+                <td>{{ user.roles|json_encode() }}</td>
+                <td><a href="{{ path('edit_Role', {"id": user.id}) }}" class="btn btn-xs btn-primary">
+                        <span class="fa fa-pencil"></span>
+                    </a>
+                </td>
+            </tr>
 
             </tbody>
         </table>
-
     </div>
 {% endblock %}
