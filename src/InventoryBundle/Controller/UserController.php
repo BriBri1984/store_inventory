@@ -15,7 +15,6 @@ use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 
-
 /**
  * Class UserController
  * @package InventoryBundle\Controller
@@ -30,7 +29,7 @@ class UserController extends Controller
         return $this->render('InventoryBundle:User:register.html.twig');
     }
 
- /**
+    /**
      * @param Request $request
      * @Route ("/register_process", name="register_process")
      *
@@ -49,7 +48,7 @@ class UserController extends Controller
         $em->persist($user);
         $em->flush();
 
-        $this->addFlash('success','User Created!');
+        $this->addFlash('success', 'User Created!');
 
         return $this->redirectToRoute('login_form');
     }
@@ -57,6 +56,7 @@ class UserController extends Controller
     /**
      * @Route("/login", name="login_form")
      * @param Request $request
+     *
      * @return Response
      */
     public function loginAction(Request $request)
@@ -70,12 +70,12 @@ class UserController extends Controller
         $lastUsername = $authenticationUtils->getLastUsername();
 
         $form = $this->createForm(LoginForm::class, [
-            '_username' => $lastUsername
+            '_username' => $lastUsername,
         ]);
 
         return $this->render('InventoryBundle:User:login.html.twig', [
-            'form' => $form->createView(),
-            'error'         => $error,
+            'form'  => $form->createView(),
+            'error' => $error,
         ]);
 
     }
@@ -121,8 +121,7 @@ class UserController extends Controller
     public function rolesAction()
     {
         $userRepo = $this->getDoctrine()->getRepository(User::class);
-        $users = $userRepo->findAll();
-
+        $users    = $userRepo->findAll();
 
 
         return $this->render('InventoryBundle:User:role.html.twig', [
@@ -137,7 +136,7 @@ class UserController extends Controller
     {
         $userRepo = $this->getDoctrine()->getRepository(User::class);
         $user     = $userRepo->find($id);
-        $form = $this->createForm(EditUserForm::class);
+        $form     = $this->createForm(EditUserForm::class);
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -148,7 +147,7 @@ class UserController extends Controller
                 'user' => $user,
                 'form' => $form,
             ]);
-            }
+        }
 
 
         return $this->render('@Inventory/User/edit.role.form.html.twig', [
@@ -159,25 +158,25 @@ class UserController extends Controller
 
     }
 
-   /* /**
-     * @Route("/saveRole/{id}", name="save_Role")
-     */
-   /* public function saveRolesAction(Request $request, $id)
-    {
+    /* /**
+      * @Route("/saveRole/{id}", name="save_Role")
+      */
+    /* public function saveRolesAction(Request $request, $id)
+     {
 
-        $userRepo  = $this->getDoctrine()->getRepository(User::class);
-        $user      = $userRepo->find($id);
+         $userRepo  = $this->getDoctrine()->getRepository(User::class);
+         $user      = $userRepo->find($id);
 
-        $userRoles = $request->get('roles');
+         $userRoles = $request->get('roles');
 
-        $user->setRoles($userRoles);
+         $user->setRoles($userRoles);
 
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($user);
-        $em->flush();
+         $em = $this->getDoctrine()->getManager();
+         $em->persist($user);
+         $em->flush();
 
-        return $this->redirectToRoute('role');
-    }*/
+         return $this->redirectToRoute('role');
+     }*/
 
     /**
      * @Route("/logout", name="logout")
@@ -188,22 +187,22 @@ class UserController extends Controller
 
     }
 
-   /* /**
-     * @param Request $request
-     * @Route("/logoutProcess", name="logout_Process")
-     *
-     * @return Response
-     */
-   /* public function logoutProcessAction(Request $request)
-    {
-        $session = $this->get('session');
-        $session->remove('logged_in');
-        $session->remove('user_id');
-        $session->clear();
+    /* /**
+      * @param Request $request
+      * @Route("/logoutProcess", name="logout_Process")
+      *
+      * @return Response
+      */
+    /* public function logoutProcessAction(Request $request)
+     {
+         $session = $this->get('session');
+         $session->remove('logged_in');
+         $session->remove('user_id');
+         $session->clear();
 
-        $this->addFlash('success','User logged out!');
+         $this->addFlash('success','User logged out!');
 
-        return $this->redirectToRoute('inventory_page');
-    }*/
+         return $this->redirectToRoute('inventory_page');
+     }*/
 
 }
