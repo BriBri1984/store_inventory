@@ -104,7 +104,7 @@ class MasterInventory
     }
 
     /**
-     * @return mixed
+     * @return \DateTime
      */
     public function getDateOrdered()
     {
@@ -120,7 +120,7 @@ class MasterInventory
     }
 
     /**
-     * @return mixed
+     * @return \DateTime
      */
     public function getDateReceived()
     {
@@ -134,6 +134,4 @@ class MasterInventory
     {
         $this->dateReceived = $dateReceived;
     }
-
-
 }

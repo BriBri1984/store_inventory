@@ -8,7 +8,7 @@ use Doctrine\DBAL\Schema\Schema;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-class Version20170713112051 extends AbstractMigration
+class Version20170714155601 extends AbstractMigration
 {
     /**
      * @param Schema $schema
@@ -18,7 +18,7 @@ class Version20170713112051 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE master_inventory CHANGE product_ordered product_ordered DATE NOT NULL, CHANGE product_received product_received DATE NOT NULL');
+        $this->addSql('CREATE TABLE master_inventory (id INT AUTO_INCREMENT NOT NULL, product_name VARCHAR(255) NOT NULL, cost DOUBLE PRECISION NOT NULL, quantity INT NOT NULL, date_ordered DATE NOT NULL, date_received DATE NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
     }
 
     /**
@@ -29,6 +29,6 @@ class Version20170713112051 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE master_inventory CHANGE product_ordered product_ordered VARCHAR(255) NOT NULL COLLATE utf8_unicode_ci, CHANGE product_received product_received VARCHAR(255) NOT NULL COLLATE utf8_unicode_ci');
+        $this->addSql('DROP TABLE master_inventory');
     }
 }
