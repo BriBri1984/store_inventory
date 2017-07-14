@@ -12,6 +12,7 @@ use InventoryBundle\Entity\User;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * Class InventoryController
@@ -100,10 +101,13 @@ class InventoryController extends Controller
         $inventory->setProductName($request->get('name'));
         $inventory->setCost($request->get('cost'));
         $inventory->setQuantity($request->get('quantity'));
-        $inventory->setDateOrdered($request->get('date_ordered'));
-        $inventory->setDateReceived($request->get('date_received'));
 
+        $dateOrdered = \DateTime::createFromFormat('Y-m-d', $request->get('date_ordered'));
+        $inventory->setDateOrdered($dateOrdered);
 
+        $dateReceived = \DateTime::createFromFormat('Y-m-d', $request->get('date_received'));
+        $inventory->setDateReceived($dateReceived);
+        
         $em = $this->getDoctrine()->getManager();
         $em->persist($inventory);
         $em->flush();
