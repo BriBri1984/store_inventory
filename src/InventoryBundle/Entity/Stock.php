@@ -18,22 +18,23 @@ class Stock
     private $id;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string")
      */
     private $name;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $stock;
-
-    /**
+     * @var string
+     *
      * @ORM\Column(type="date")
      */
     private $date;
 
     /**
-     * @ORM\OneToMany(targetEntity="StockQuantity" , mappedBy="stock")
+     * @var StockQuantity[]
+     *
+     * @ORM\OneToMany(targetEntity="InventoryBundle\Entity\StockQuantity" , mappedBy="stock")
      */
     private $stockQuantity;
 
@@ -46,7 +47,19 @@ class Stock
     }
 
     /**
-     * @return mixed
+     * @param mixed $id
+     *
+     * @return Stock
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * @return string
      */
     public function getName()
     {
@@ -54,31 +67,19 @@ class Stock
     }
 
     /**
-     * @param mixed $name
+     * @param string $name
+     *
+     * @return Stock
      */
     public function setName($name)
     {
         $this->name = $name;
+
+        return $this;
     }
 
     /**
-     * @return mixed
-     */
-    public function getStock()
-    {
-        return $this->stock;
-    }
-
-    /**
-     * @param mixed $stock
-     */
-    public function setStock($stock)
-    {
-        $this->stock = $stock;
-    }
-
-    /**
-     * @return mixed
+     * @return string
      */
     public function getDate()
     {
@@ -86,15 +87,19 @@ class Stock
     }
 
     /**
-     * @param mixed $date
+     * @param string $date
+     *
+     * @return Stock
      */
     public function setDate($date)
     {
         $this->date = $date;
+
+        return $this;
     }
 
     /**
-     * @return mixed
+     * @return StockQuantity[]
      */
     public function getStockQuantity()
     {
@@ -102,15 +107,14 @@ class Stock
     }
 
     /**
-     * @param mixed $stockQuantity
+     * @param StockQuantity[] $stockQuantity
+     *
+     * @return Stock
      */
     public function setStockQuantity($stockQuantity)
     {
         $this->stockQuantity = $stockQuantity;
+
+        return $this;
     }
-
-
-
-
-
 }

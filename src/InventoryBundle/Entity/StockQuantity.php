@@ -18,14 +18,16 @@ class StockQuantity
     private $id;
 
     /**
+     * @ORM\JoinColumn(name="stock_id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="InventoryBundle\Entity\Stock", inversedBy="stockQuantity", fetch="EAGER")
+     */
+    private $stock;
+
+
+    /**
      * @ORM\Column(type="integer")
      */
     private $stockQuantity;
-
-    /**
-     *  @ORM\ManyToOne(targetEntity="Stock" , inversedBy="stock")
-     */
-    private $stock;
 
     /**
      * @return mixed
@@ -36,19 +38,15 @@ class StockQuantity
     }
 
     /**
-     * @return mixed
+     * @param mixed $id
+     *
+     * @return StockQuantity
      */
-    public function getStockQuantity()
+    public function setId($id)
     {
-        return $this->stockQuantity;
-    }
+        $this->id = $id;
 
-    /**
-     * @param mixed $stockQuantity
-     */
-    public function setStockQuantity($stockQuantity)
-    {
-        $this->stockQuantity = $stockQuantity;
+        return $this;
     }
 
     /**
@@ -61,12 +59,33 @@ class StockQuantity
 
     /**
      * @param mixed $stock
+     *
+     * @return StockQuantity
      */
-    public function setStock(Stock $stock)
+    public function setStock($stock)
     {
         $this->stock = $stock;
+
+        return $this;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getStockQuantity()
+    {
+        return $this->stockQuantity;
+    }
 
+    /**
+     * @param mixed $stockQuantity
+     *
+     * @return StockQuantity
+     */
+    public function setStockQuantity($stockQuantity)
+    {
+        $this->stockQuantity = $stockQuantity;
 
+        return $this;
+    }
 }
