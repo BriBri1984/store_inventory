@@ -48,7 +48,7 @@ class Store
 
 
 
-    
+
     /**
      * @return mixed
      */

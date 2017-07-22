@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+
+    {{ form_start(form) }}
+
+    {{ form_widget(form) }}
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+    {{ form_end(form) }}
+
+
+    <table class="table table-striped table-bordered">
+        <thead>
+        <tr>
+            <th>Stock</th>
+            <th>Date Created</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in stock %}
+        <tr>
+            <td>{{ item.name }}</td>
+            <td>{{ item.date|date("m/d/Y") }}</td>
+            <td>
+                <a class="btn btn-primary"
+                        href="{{ path('add_quantity', {"id": item.id} ) }}">
+                    Add Quantity
+                </a>
+            </td>
+            {% endfor %}
+        </tr>
+
+        </tbody>
+    </table>
+
+{% endblock %}

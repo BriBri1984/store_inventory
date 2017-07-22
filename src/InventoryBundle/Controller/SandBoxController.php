@@ -17,6 +17,7 @@ class SandBoxController extends Controller
     {
         $stockRepo = $this->getDoctrine()->getRepository(Stock::class);
         $stock = $stockRepo->findAll();
-        dump($stock); die;
+
+
     }
 }
