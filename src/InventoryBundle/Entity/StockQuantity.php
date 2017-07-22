@@ -23,9 +23,13 @@ class StockQuantity
      */
     private $stock;
 
+    /**
+     * @ORM\Column(type="integer", name="price", nullable=false)
+     */
+    private $price;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", name="stock_quantity", nullable=false)
      */
     private $stockQuantity;
 
@@ -87,5 +91,21 @@ class StockQuantity
         $this->stockQuantity = $stockQuantity;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    /**
+     * @param mixed $price
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
     }
 }

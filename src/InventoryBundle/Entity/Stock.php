@@ -31,10 +31,12 @@ class Stock
      */
     private $date;
 
+
+
     /**
      * @var StockQuantity[]
      *
-     * @ORM\OneToMany(targetEntity="InventoryBundle\Entity\StockQuantity" , mappedBy="stock")
+     * @ORM\OneToMany(targetEntity="InventoryBundle\Entity\StockQuantity" , mappedBy="stock", fetch="EAGER")
      */
     private $stockQuantity;
 
