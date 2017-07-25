@@ -1,0 +1,33 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+
+    <h1>Stock Dump</h1>
+    {{ dump(stock) }}
+
+    <h1>Stock quantity for this stock item</h1>
+
+    {{ dump(stock.stockQuantity) }}
+
+    <pre>
+    // show the stock name in bold up top and the date it was added
+
+    // then we need to show a form with two fields, quantity and price
+
+    // then we need a list of all the stock quantity records, showing a grand total at the end
+
+    // The grand total for now does NOT need to consider the amount that is in each store
+
+        </pre>
+    <h1> Item: {{ stock.name }}</h1>
+
+    <h1> Date: {{ stock.date|date("m/d/Y") }}</h1>
+
+    {{ form_start(form) }}
+
+    {{ form_widget(form) }}
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+    {{ form_end(form) }}
+
+{% endblock %}

@@ -19,18 +19,18 @@
         </tr>
         </thead>
         <tbody>
-        {% for item in stock %}
-        <tr>
+            {% for item in stock %}
+            <tr>
             <td>{{ item.name }}</td>
             <td>{{ item.date|date("m/d/Y") }}</td>
-            <td>
-                <a class="btn btn-primary"
-                        href="{{ path('add_quantity', {"id": item.id} ) }}">
-                    Add Quantity
-                </a>
-            </td>
+                <td>
+                    <a class="btn btn-primary"
+                       href="{{ path('add_quantity', {"id": item.id} ) }}">
+                        Add Quantity
+                    </a>
+                </td>
             {% endfor %}
-        </tr>
+            </tr>
 
         </tbody>
     </table>

@@ -14,7 +14,7 @@ class AddQuantity extends AbstractType
     {
         $builder
             ->add('price', NumberType::class)
-            ->add('quantity', NumberType::class);
+            ->add('stock_quantity', NumberType::class);
 
 
 
