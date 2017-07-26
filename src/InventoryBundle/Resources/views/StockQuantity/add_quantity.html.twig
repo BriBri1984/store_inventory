@@ -30,4 +30,30 @@
     <button type="submit" class="btn btn-primary">Submit</button>
     {{ form_end(form) }}
 
+    <div class="container">
+        <h1>Stock Quantity</h1>
+        <hr/>
+
+        <table class="table">
+            <thead class="thead-inverse">
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for stockQuantityRecord in stockQuantityRecords %}
+            <tr>
+                <th scope="row">{{ stockQuantityRecord.id }}</th>
+                <td>{{ stockQuantityRecord.stock.name }}</td>
+                <td>{{ stockQuantityRecord.stockQuantity }}</td>
+                <td>{{ stockQuantityRecord.price }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
 {% endblock %}

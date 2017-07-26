@@ -58,7 +58,9 @@ class StockController extends Controller
     public function addQuantityAction(Request $request, $id)
     {
         $stockRepo = $this->getDoctrine()->getRepository(Stock::class);
+        $stockQuantityRepo = $this->getDoctrine()->getRepository(StockQuantity::class);
         $stock     = $stockRepo->find($id);
+        $stockQuantity = $stockQuantityRepo->findAll();
         $form      = $this->createForm(AddQuantity::class);
 
         $form->handleRequest($request);
@@ -77,6 +79,8 @@ class StockController extends Controller
         return $this->render("@Inventory/StockQuantity/add_quantity.html.twig", [
             'stock' => $stock,
             'form'  => $form->createView(),
+            'stockQuantityRecords' => $stockQuantity,
+
         ]);
     }
 }
