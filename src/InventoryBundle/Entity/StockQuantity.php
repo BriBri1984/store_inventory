@@ -108,4 +108,7 @@ class StockQuantity
     {
         $this->price = $price;
     }
+
+
+
 }

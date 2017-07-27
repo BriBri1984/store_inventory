@@ -119,4 +119,13 @@ class Stock
 
         return $this;
     }
+
+
+    public function getQuantity()
+    {
+        $this->stockQuantity;
+
+
+
+    }
 }

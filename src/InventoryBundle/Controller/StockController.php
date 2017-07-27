@@ -74,6 +74,11 @@ class StockController extends Controller
             $em->flush();
 
             $this->addFlash('success', 'Quantity Added');
+
+            return $this->redirectToRoute('stock', [
+                'stock' => $stock,
+                'stockQuantityRecords' => $stockQuantity,
+            ]);
         }
 
         return $this->render("@Inventory/StockQuantity/add_quantity.html.twig", [
