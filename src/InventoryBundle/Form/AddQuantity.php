@@ -3,7 +3,9 @@
 namespace InventoryBundle\Form;
 
 use InventoryBundle\Entity\StockQuantity;
+use function Sodium\add;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -18,7 +20,11 @@ class AddQuantity extends AbstractType
     {
         $builder
             ->add('price', NumberType::class)
-            ->add('stock_quantity', NumberType::class);
+            ->add('stock_quantity', NumberType::class)
+            ->add('date', DateType::class, [
+                'html5' => true,
+                'required' => true
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -29,6 +29,11 @@ class StockQuantity
     private $price;
 
     /**
+     * @ORM\Column(type="date")
+     */
+    private $date;
+
+    /**
      * @ORM\Column(type="integer", name="stock_quantity", nullable=false)
      */
     private $stockQuantity;
@@ -108,6 +113,24 @@ class StockQuantity
     {
         $this->price = $price;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * @param mixed $date
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+    }
+
+
 
 
 

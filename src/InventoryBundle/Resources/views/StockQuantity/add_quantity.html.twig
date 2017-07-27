@@ -23,6 +23,8 @@
                             <th>Name</th>
                             <th>Price</th>
                             <th>Quantity</th>
+                            <th>Date</th>
+
                         </tr>
                         </thead>
                         <tbody>
@@ -32,6 +34,7 @@
                                 <td>{{ stockQuantityRecord.stock.name }}</td>
                                 <td>${{ stockQuantityRecord.price|number_format(2) }}</td>
                                 <td>{{ stockQuantityRecord.stockQuantity }}</td>
+                                <td>{{ stockQuantityRecord.date|date("m/d/Y") }}</td>
                             </tr>
                         {% endfor %}
                         </tbody>
