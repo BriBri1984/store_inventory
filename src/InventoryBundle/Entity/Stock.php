@@ -32,7 +32,6 @@ class Stock
     private $date;
 
 
-
     /**
      * @var StockQuantity[]
      *
@@ -120,12 +119,22 @@ class Stock
         return $this;
     }
 
-
+    /**
+     * Calculate the amount of stock we have by summing all StockQuantity
+     *
+     * @return int
+     */
     public function getQuantity()
     {
-        $this->stockQuantity;
+        $quantity = 0;
 
+        if (!empty($this->stockQuantity)) {
 
+            foreach ($this->stockQuantity as $stockQuantity) {
+                $quantity += $stockQuantity->getStockQuantity();
+            }
+        }
 
+        return $quantity;
     }
 }
