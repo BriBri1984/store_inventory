@@ -137,4 +137,25 @@ class Stock
 
         return $quantity;
     }
+
+    /**
+     * Get the average price of this item
+     *
+     * @return float|null
+     */
+    public function getAveragePrice()
+    {
+        $averagePrice = 0;
+
+        if (!empty($this->stockQuantity)) {
+
+            foreach ($this->stockQuantity as $stockQuantity) {
+                $averagePrice += $stockQuantity->getPrice();
+            }
+
+            $averagePrice = $averagePrice / count($this->stockQuantity);
+        }
+
+        return $averagePrice;
+    }
 }
