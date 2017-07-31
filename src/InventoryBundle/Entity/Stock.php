@@ -40,6 +40,13 @@ class Stock
     private $stockQuantity;
 
     /**
+     * @var StoreStock[]
+     *
+     * @ORM\OneToMany(targetEntity="InventoryBundle\Entity\StoreStock", mappedBy="stock", fetch="EAGER")
+     */
+    private $storeStock;
+
+    /**
      * @return mixed
      */
     public function getId()
@@ -118,6 +125,24 @@ class Stock
 
         return $this;
     }
+
+    /**
+     * @return StoreStock[]
+     */
+    public function getStoreStock()
+    {
+        return $this->storeStock;
+    }
+
+    /**
+     * @param StoreStock[] $storeStock
+     */
+    public function setStoreStock($storeStock)
+    {
+        $this->storeStock = $storeStock;
+    }
+
+
 
     /**
      * Calculate the amount of stock we have by summing all StockQuantity

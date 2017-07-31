@@ -46,6 +46,13 @@ class Store
      */
     private $phoneNumber;
 
+    /**
+     * @var StoreStock[]
+     *
+     * @ORM\OneToMany(targetEntity="InventoryBundle\Entity\StoreStock", mappedBy="store", fetch="EAGER")
+     */
+    private $storeStock;
+
 
 
 
@@ -137,6 +144,22 @@ class Store
     public function setPhoneNumber($phoneNumber)
     {
         $this->phoneNumber = $phoneNumber;
+    }
+
+    /**
+     * @return StoreStock[]
+     */
+    public function getStoreStock()
+    {
+        return $this->storeStock;
+    }
+
+    /**
+     * @param StoreStock[] $storeStock
+     */
+    public function setStoreStock($storeStock)
+    {
+        $this->storeStock = $storeStock;
     }
 
 
