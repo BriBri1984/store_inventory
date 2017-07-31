@@ -24,11 +24,11 @@
                     <tbody>
                         {% for item in storeStock %}
                         <tr>
-                            <td>{{ item.store }}</td>
-                            <td>{{ item.stock }}</td>
+                            <td>{{ item.store.storeName }}</td>
+                            <td>{{ item.stock.name }}</td>
                             <td>
                                 <a class="btn btn-primary">
-                                    Add Quantity
+                                    Add Stock
                                 </a>
                             </td>
                             {% endfor %}
