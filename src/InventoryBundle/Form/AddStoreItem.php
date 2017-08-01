@@ -16,10 +16,12 @@ class AddStoreItem extends AbstractType
     {
         $builder
             ->add('store', EntityType::class, [
-                'class' => 'InventoryBundle\Entity\Store'
+                'class' => 'InventoryBundle\Entity\Store',
+                'choice_label' => 'getStoreName',
             ])
             ->add('stock', EntityType::class, [
-                'class' => 'InventoryBundle\Entity\Stock'
+                'class' => 'InventoryBundle\Entity\Stock',
+                'choice_label' => 'getName',
             ]);
 
     }
