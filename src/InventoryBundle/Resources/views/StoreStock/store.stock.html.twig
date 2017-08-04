@@ -18,7 +18,7 @@
                     <tr>
                         <th>Store</th>
                         <th>Stock</th>
-
+                        <th>Action</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -27,7 +27,8 @@
                            <td>{{ item.store.storeName }}</td>
                             <td>{{ item.stock.name }}</td>
                             <td>
-                                <a class="btn btn-primary">
+                                <a class="btn btn-primary"
+                                    href="{{ path('add_store_quantity', {"id": item.id}) }}">
                                     Add Stock
                                 </a>
                             </td>

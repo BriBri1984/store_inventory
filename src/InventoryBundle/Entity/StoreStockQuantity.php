@@ -6,9 +6,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="stock_quantity")
+ * @ORM\Table(name="store_stock_quantity")
  */
-class StockQuantity
+class StoreStockQuantity
 {
     /**
      * @ORM\Id
@@ -18,10 +18,10 @@ class StockQuantity
     private $id;
 
     /**
-     * @ORM\JoinColumn(name="stock_id", nullable=false)
-     * @ORM\ManyToOne(targetEntity="InventoryBundle\Entity\Stock", inversedBy="stockQuantity", fetch="EAGER")
+     * @ORM\JoinColumn(name="store_stock_id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="InventoryBundle\Entity\StoreStock", inversedBy="storeStockQuantity", fetch="EAGER")
      */
-    private $stock;
+    private $storeStock;
 
     /**
      * @ORM\Column(type="integer", name="price", nullable=false)
@@ -34,10 +34,9 @@ class StockQuantity
     private $date;
 
     /**
-     * @ORM\Column(type="integer", name="stock_quantity", nullable=false)
+     * @ORM\Column(type="string" , name="store_stock_quantity", nullable=false)
      */
-    private $stockQuantity;
-
+    private $storeStockQuantity;
 
     /**
      * @return mixed
@@ -49,54 +48,26 @@ class StockQuantity
 
     /**
      * @param mixed $id
-     *
-     * @return StockQuantity
      */
     public function setId($id)
     {
         $this->id = $id;
-
-        return $this;
     }
 
     /**
      * @return mixed
      */
-    public function getStock()
+    public function getStoreStock()
     {
-        return $this->stock;
+        return $this->storeStock;
     }
 
     /**
-     * @param mixed $stock
-     *
-     * @return StockQuantity
+     * @param mixed $storeStock
      */
-    public function setStock($stock)
+    public function setStoreStock($storeStock)
     {
-        $this->stock = $stock;
-
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getStockQuantity()
-    {
-        return $this->stockQuantity;
-    }
-
-    /**
-     * @param mixed $stockQuantity
-     *
-     * @return StockQuantity
-     */
-    public function setStockQuantity($stockQuantity)
-    {
-        $this->stockQuantity = $stockQuantity;
-
-        return $this;
+        $this->storeStock = $storeStock;
     }
 
     /**
@@ -131,9 +102,21 @@ class StockQuantity
         $this->date = $date;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getStoreStockQuantity()
+    {
+        return $this->storeStockQuantity;
+    }
 
-
-
+    /**
+     * @param mixed $storeStockQuantity
+     */
+    public function setStoreStockQuantity($storeStockQuantity)
+    {
+        $this->storeStockQuantity = $storeStockQuantity;
+    }
 
 
 }

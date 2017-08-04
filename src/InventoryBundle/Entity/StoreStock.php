@@ -31,6 +31,14 @@ class StoreStock
     private $stock;
 
     /**
+     * @var StoreStockQuantity[]
+     *
+     * @ORM\OneToMany(targetEntity="InventoryBundle\Entity\StoreStockQuantity" , mappedBy="storeStock", fetch="EAGER")
+     */
+    private $storeStockQuantity;
+
+
+    /**
      * @return mixed
      */
     public function getId()
@@ -76,6 +84,22 @@ class StoreStock
     public function setStock($stock)
     {
         $this->stock = $stock;
+    }
+
+    /**
+     * @return StoreStockQuantity[]
+     */
+    public function getStoreStockQuantity()
+    {
+        return $this->storeStockQuantity;
+    }
+
+    /**
+     * @param StoreStockQuantity[] $storeStockQuantity
+     */
+    public function setStoreStockQuantity($storeStockQuantity)
+    {
+        $this->storeStockQuantity = $storeStockQuantity;
     }
 
 
