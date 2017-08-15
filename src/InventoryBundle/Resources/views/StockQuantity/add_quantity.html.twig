@@ -1,0 +1,47 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+            <span class="col-md-3">
+                <h5> Item: {{ stock.name }}</h5>
+                <h5> Date: {{ stock.date|date("m/d/Y") }}</h5>
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                <button class="btn btn-primary">Submit</button>
+                {{ form_end(form) }}
+            </span>
+            <span class="col-md-9">
+                <div class="container">
+                    <h4>Stock Quantity History</h4>
+
+                    <table class="table">
+                        <thead class="thead-inverse">
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Date</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for stockQuantityRecord in stockQuantityRecords %}
+                            <tr>
+                                <th scope="row">{{ stockQuantityRecord.id }}</th>
+                                <td>{{ stockQuantityRecord.stock.name }}</td>
+                                <td>${{ stockQuantityRecord.price|number_format(2) }}</td>
+                                <td>{{ stockQuantityRecord.stockQuantity }}</td>
+                                <td>{{ stockQuantityRecord.date|date("m/d/Y") }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </span>
+        </div>
+    </div>
+
+{% endblock %}

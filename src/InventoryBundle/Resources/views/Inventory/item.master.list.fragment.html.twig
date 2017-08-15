@@ -1,0 +1,32 @@
+{% if items is not empty %}
+
+    <table class="table">
+        <thead class="thead-inverse">
+        <tr>
+            <th>#</th>
+            <th>Product Name</th>
+            <th>Cost</th>
+            <th>Stock Quantity</th>
+            <th>Date ordered</th>
+            <th>Date received</th>
+            <th>Edit</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in items %}
+            <tr>
+                <th scope="row">{{ item.id }}</th>
+                <td>{{ item.productName }}</td>
+                <td>{{ item.cost }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.dateOrdered|date("m/d/Y") }}</td>
+                <td>{{ item.dateReceived|date("m/d/Y") }}</td>
+                <td>
+                    <a href="{{ path('edit_inventory_form', {"id": item.id}) }}" class="btn btn-xs btn-primary"><span class="fa fa-pencil"></span>Edit</a>
+                </td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+{% endif %}

@@ -15,7 +15,7 @@
 
 </head>
 <body>
-
+{% set route = path(app.request.attributes.get('_route')) %}
 <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse fixed-top">
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
             data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false"
@@ -26,35 +26,40 @@
 
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="{{ path('inventory_page') }}">Inventory<span class="sr-only">(current)</span></a>
+            <li class="nav-item {% if route == path('inventory_page') %}active{% endif %}">
+                <a class="nav-link " href="{{ path('inventory_page') }}">
+                    Inventory<span class="sr-only">(current)</span>
+                </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item {% if route == path('stores') %}active{% endif %}">
                 <a class="nav-link" href="/stores">Stores</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ path('role') }}">Role</a>
             </li>
-            <div class="btn-group">
-                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">
-                    Order History
-                </button>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="/a1">A1</a>
-                    <a class="dropdown-item" href="#">A2</a>
-                    <a class="dropdown-item" href="#">A3</a>
-                    <a class="dropdown-item" href="#">A4</a>
-                    <a class="dropdown-item" href="#">A5</a>
-                    <a class="dropdown-item" href="#">A6</a>
-                    <a class="dropdown-item" href="#">A7</a>
-                    <a class="dropdown-item" href="#">A8</a>
-                    <a class="dropdown-item" href="#">A9</a>
-                    <a class="dropdown-item" href="#">A10</a>
-                    <a class="dropdown-item" href="#">A11</a>
+            <li class="nav-item {% if route == path('stock') %}active{% endif %}">
+                <a class="nav-link" href="{{ path('stock') }}">Stock</a>
+            </li>
+            {#<div class="btn-group">#}
+                {#<button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown"#}
+                        {#aria-haspopup="true" aria-expanded="false">#}
+                    {#Order History#}
+                {#</button>#}
+                {#<div class="dropdown-menu">#}
+                    {#<a class="dropdown-item" href="/a1">A1</a>#}
+                    {#<a class="dropdown-item" href="#">A2</a>#}
+                    {#<a class="dropdown-item" href="#">A3</a>#}
+                    {#<a class="dropdown-item" href="#">A4</a>#}
+                    {#<a class="dropdown-item" href="#">A5</a>#}
+                    {#<a class="dropdown-item" href="#">A6</a>#}
+                    {#<a class="dropdown-item" href="#">A7</a>#}
+                    {#<a class="dropdown-item" href="#">A8</a>#}
+                    {#<a class="dropdown-item" href="#">A9</a>#}
+                    {#<a class="dropdown-item" href="#">A10</a>#}
+                    {#<a class="dropdown-item" href="#">A11</a>#}
 
-                </div>
-            </div>
+                {#</div>#}
+            {#</div>#}
         </ul>
         <ul class="nav navbar-nav">
             {% if is_granted('ROLE_USER') %}

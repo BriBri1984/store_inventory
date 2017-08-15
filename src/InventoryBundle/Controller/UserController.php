@@ -143,7 +143,7 @@ class UserController extends Controller
             $em->persist($user);
             $em->flush();
 
-            $this->addFlash('task_success', 'Role Updated');
+            $this->addFlash('success', 'Role Updated');
 
             return $this->redirectToRoute('role', [
                 'user' => $user,

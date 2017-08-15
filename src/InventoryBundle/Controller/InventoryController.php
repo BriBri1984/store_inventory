@@ -2,6 +2,7 @@
 
 namespace InventoryBundle\Controller;
 
+use InventoryBundle\Entity\MasterInventory;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -11,6 +12,7 @@ use InventoryBundle\Entity\User;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * Class InventoryController
@@ -48,6 +50,20 @@ class InventoryController extends Controller
     }
 
     /**
+     * @Route("/master_inventory", name="master_inventory")
+     * @return Response
+     */
+    public function masterInventoryPageAction()
+    {
+        $masterInventoryRepo = $this->getDoctrine()->getRepository(MasterInventory::class);
+        $items               = $masterInventoryRepo->findAll();
+
+        return $this->render('InventoryBundle:Inventory:master.inventory.html.twig', [
+            'items' => $items,
+        ]);
+    }
+
+    /**
      * @todo brian note that once you give a route a name you can access it in twig using the path("route_name") function
      * I added it to the form in InventoryBundle:Default:index.html.twig
      *
@@ -73,6 +89,30 @@ class InventoryController extends Controller
         $em->flush();
 
         return $this->redirectToRoute('inventory_page');
+    }
+
+    /**
+     * @Route("/create_master_inventory", name="create_master_inventory")
+     * @return RedirectResponse
+     */
+    public function newMasterInventoryAction(Request $request)
+    {
+        $inventory = new MasterInventory();
+        $inventory->setProductName($request->get('name'));
+        $inventory->setCost($request->get('cost'));
+        $inventory->setQuantity($request->get('quantity'));
+
+        $dateOrdered = \DateTime::createFromFormat('Y-m-d', $request->get('date_ordered'));
+        $inventory->setDateOrdered($dateOrdered);
+
+        $dateReceived = \DateTime::createFromFormat('Y-m-d', $request->get('date_received'));
+        $inventory->setDateReceived($dateReceived);
+        
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($inventory);
+        $em->flush();
+
+        return $this->redirectToRoute('master_inventory');
     }
 
     /**
@@ -102,6 +142,19 @@ class InventoryController extends Controller
             'inventory' => $inventory,
         ]);
     }
+
+    /*/**
+     * @Route("/edit_master_inventory_form/{id}", name="edit_master_inventory_form")
+     * @param $id
+     * @return Response
+     */
+    /*public function editMasterInventoryFormAction($id)
+    {
+        $inventoryRepository = $this->getDoctrine()->getRepository(MasterInventory::class);
+        $inventory           = $inventoryRepository->find($id);
+
+        return $this->render()
+    }    */
 
     /**
      * @param Request $request

@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+
+    <div class="container">
+        <h1>Inventory Master</h1>
+        <hr/>
+
+        {#All form fields should have a name="field_name" property. You will use the name property to get the value in php#}
+        <form class="form-inline" method="post" action="{{ path('create_master_inventory') }}">
+            <label class="mr-sm-2" for="inlineFormCustomSelect">Add Item</label>
+
+            <label class="sr-only" for="inlineFormInput">Name</label>
+            <input type="text" class="form-control mb-4 mr-sm-4 mb-sm-0" id="inlineFormInput" placeholder="Product name"
+                   name="name">
+
+            <label class="sr-only" for="inlineFormInput">Cost</label>
+            <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" placeholder="Cost"
+                   name="cost">
+
+            <label class="sr-only" for="inlineFormInput">Quantity</label>
+            <input type="number" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" placeholder="Quantity"
+                   name="quantity">
+
+            <label class="sr-only" for="inlineFormInput">Quantity</label>
+            <input type="date" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" placeholder="Date Ordered"
+                   name="date_ordered">
+
+            <label class="sr-only" for="inlineFormInput">Quantity</label>
+            <input type="date" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" placeholder="Date Received"
+                   name="date_received">
+
+
+
+
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+        {% include "@Inventory/Inventory/item.master.list.fragment.html.twig" %}
+
+    </div>
+{% endblock %}
