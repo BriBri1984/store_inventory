@@ -46,7 +46,10 @@ class Store
      */
     private $phoneNumber;
 
-
+    /**
+     * @ORM\OneToMany(targetEntity="InventoryBundle\Entity\StoreStock", mappedBy="store")
+     */
+    private $storeStock;
 
 
     /**
