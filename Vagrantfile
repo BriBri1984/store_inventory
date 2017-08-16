@@ -8,7 +8,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.hostname = "store.local"
 
     config.vm.synced_folder ".", app_path
-    config.vm.network "private_network", ip: "10.10.10.123"
+    config.vm.network "private_network", ip: "10.10.19.123"
 
     # Disable the new default behavior introduced in Vagrant 1.7, to
     # ensure that all Vagrant machines will use the same SSH key pair.
