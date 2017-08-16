@@ -1,0 +1,14 @@
+---
+- hosts: all
+  roles:
+    - common
+    - ntp
+    - redis
+    - mysql
+    - php
+    - nginx
+#    - varnish
+    - webgrind
+    - app
+    - resque
+    - xdebug

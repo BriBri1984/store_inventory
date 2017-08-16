@@ -1,0 +1,109 @@
+---
+- name: Ensure PPAs
+  apt_repository: repo="{{ item }}"
+  become: True
+  with_items:
+    - ppa:ondrej/php
+    - ppa:ansible/ansible
+  ignore_errors: True
+
+- name: php7.1-common
+  action: apt pkg=php7.1-common state=present
+  become: True
+
+- name: php7.1
+  action: apt pkg=php7.1 state=present
+  become: True
+
+- name: php7.1-dev
+  action: apt pkg=php7.1-dev state=present
+  become: True
+
+- name: libreadline-dev
+  action: apt pkg=libreadline-dev state=present
+  become: True
+
+- name: php7.1-readline
+  action: apt pkg=php7.1-readline state=present
+  become: True
+
+- name: php7.1-gd
+  action: apt pkg=php7.1-gd state=present
+  become: True
+
+- name: php7.1-bcmath
+  action: apt pkg=php7.1-bcmath state=present
+  become: True
+
+- name: php7.1-curl
+  action: apt pkg=php7.1-curl state=present
+  become: True
+
+- name: php7.1-mysql
+  action: apt pkg=php7.1-mysql state=present
+  become: True
+
+- name: php-apc
+  action: apt pkg=php-apc state=present
+  become: True
+
+- name: php7.1-cli
+  action: apt pkg=php7.1-cli state=present
+  become: True
+
+- name: php7.1-intl
+  action: apt pkg=php7.1-intl state=present
+  become: True
+
+- name: php7.1-mcrypt
+  action: apt pkg=php7.1-mcrypt state=present
+  become: True
+
+- name: php7.1-xml
+  action: apt pkg=php7.1-xml state=present
+  become: True
+
+- name: php7.1-fpm
+  action: apt pkg=php7.1-fpm state=present
+  become: True
+
+- name: php7.1-mbstring
+  action: apt pkg=php7.1-mbstring state=present
+  become: True
+
+- name: php7.1-zip
+  action: apt pkg=php7.1-zip state=present
+  become: True
+
+- name: php7.1-gd
+  action: apt pkg=php7.1-gd state=present
+  become: True
+
+- name: Ensure composer is installed
+  copy: src=composer.phar dest=/usr/local/bin/composer owner={{ ansible_ssh_user }} group={{ ansible_ssh_user }} mode="a+x"
+  become: True
+
+- name: Ensure web directory permissions
+  file: path=/var/www state=directory mode=0755 owner={{ ansible_ssh_user }} group={{ ansible_ssh_user }}
+  become: True
+
+- name: Ensure vendor directory and permissions
+  file: path=/var/vendor state=directory mode=0755 owner={{ ansible_ssh_user }} group={{ ansible_ssh_user }}
+  become: True
+
+- name: Ensure phpunit exists and is executable
+  copy: src=phpunit.phar dest=/usr/local/bin/phpunit owner={{ ansible_ssh_user }} group={{ ansible_ssh_user }} mode="u+rwx,g+rx,o-rwx"
+  become: True
+
+- name: Ensure php configuration for dev
+  copy: src=php.ini dest={{ item }}
+  with_items:
+    - /etc/php/7.1/fpm/php.ini
+    - /etc/php/7.1/cli/php.ini
+  become: True
+
+- name: Restart FPM
+  service: name={{ item }} state=restarted enabled=yes
+  with_items:
+    - php7.1-fpm
+  become: True

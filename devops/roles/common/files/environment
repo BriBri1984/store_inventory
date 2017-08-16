@@ -1,0 +1,8 @@
+PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:./node_modules/.bin"
+export SYMFONY_ENV=dev
+export AWS_CONFIG_FILE=/home/vagrant/.aws/credentials
+export AWS_PROFILE=/home/vagrant/.aws/credentials
+export AWS_ACCESS_KEY_ID=AKIAJPHI2G5UQ62ZG4NA
+export AWS_SECRET_KEY=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
+export AWS_SECRET_ACCESS_KEY=gR/Qe5HJOm7mYZi77hq6jfmtwL1A6lNqAiAupZ2p
+export AWS_DEFAULT_REGION=us-west-2

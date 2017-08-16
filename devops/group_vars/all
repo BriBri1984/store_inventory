@@ -1,0 +1,15 @@
+---
+datadog_api_key: "b7829a9230e7b1d8a5dd0a2f9044bf9a"
+datadog_agent_version: "1:5.13.0-1"
+datadog_config:
+  tags: "env:dev"
+  log_level: INFO
+  apm_enabled: "false"
+datadog_checks:
+  php_fpm:
+    init_config:
+    instances:
+      - name: www
+        status_url: http://localhost:8080/status
+        ping_url: http://localhost:8080/ping
+        ping_reply: pong

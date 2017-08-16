@@ -1,0 +1,21 @@
+---
+- name: ntp
+  apt: name=ntp state=present
+  become: True
+
+- name: Ensure ntp server is accurate
+  shell: "{{ item }}"
+  with_items:
+    - service ntp stop
+    - ntpdate ntp.ubuntu.com
+    - service ntp start
+  become: True
+  ignore_errors: True
+
+- name: Ensure ntp cron script
+  copy: src=refresh_ntp.sh dest="/home/{{ ansible_ssh_user }}/refresh_ntp.sh" mode="u+rwx,g-x,o-r"
+  become: True
+
+- name: CRON ntp update for AWS requests failing due to time mismatch every 5 minutes
+  cron: name="NTP Update" minute="5" user="root" job="/home/{{ ansible_ssh_user }}/refresh_ntp.sh"
+  become: True

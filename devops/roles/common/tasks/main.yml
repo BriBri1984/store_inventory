@@ -1,0 +1,156 @@
+---
+- name: Ensure ansible PPA
+  apt_repository: repo="{{ item }}"
+  become: True
+  with_items:
+    - ppa:ansible/ansible
+  ignore_errors: True
+
+- name: add apt key for nodesource
+  apt_key: url=http://deb.nodesource.com/gpgkey/nodesource.gpg.key
+  become: True
+
+- name: add repo for nodesource
+  apt_repository:
+    repo: 'deb https://deb.nodesource.com/node_0.10 {{ ansible_distribution_release }} main'
+    update_cache: yes
+  become: True
+
+- name: install nodejs
+  apt: name=nodejs
+  become: True
+
+- name: vim
+  action: apt pkg=vim state=present
+  become: True
+
+- name: git
+  action: apt pkg=git state=present
+  become: True
+
+- name: htop
+  action: apt pkg=htop state=present
+  become: True
+
+- name: python-setuptools
+  action: apt pkg=python-setuptools state=present
+  become: True
+
+- name: python-dev
+  action: apt pkg=python-dev state=present
+  become: True
+
+- name: build-essential
+  action: apt pkg=build-essential state=present
+  become: True
+
+- name: python-pip
+  action: apt pkg=python-pip state=present
+  become: True
+
+- name: ruby
+  action: apt pkg=ruby state=present
+  become: True
+
+- name: ruby-dev
+  action: apt pkg=ruby-dev state=present
+  become: True
+
+- name: ruby-sass
+  action: apt pkg=ruby-sass state=present
+  become: True
+
+- name: ruby-compass
+  action: apt pkg=ruby-compass state=present
+  become: True
+
+- name: software-properties-common
+  action: apt pkg=software-properties-common state=present
+  become: True
+
+- name: supervisor
+  action: apt pkg=supervisor state=present
+  become: True
+
+- name: zip
+  action: apt pkg=zip state=present
+  become: True
+
+- name: unzip
+  action: apt pkg=unzip state=present
+  become: True
+
+- name: Remove apache
+  apt: name=apache2 state=absent force=yes
+  become: True
+
+- name: libcurl3
+  action: apt pkg=libcurl3 state=present
+  become: True
+
+- name: libcurl3-dev
+  action: apt pkg=libcurl3-dev state=present
+  become: True
+
+- name: Install pip
+  shell: easy_install pip
+  become: True
+
+- name: Installing pip modules for https CA validation using SNI from NodeSource
+  pip: name="{{ item }}"
+  with_items:
+    - urllib3
+    - pyopenssl
+    - ndg-httpsclient
+    - pyasn1
+  become: True
+
+- name: Installing bower
+  shell: npm install -g bower
+  become: True
+
+- action: apt pkg=ansible state=present
+  become: True
+  when: symfony_env == "dev"
+
+- name: Ensure hosts file for DNS routing override
+  template: src=hosts.j2 dest=/etc/hosts owner=root group=root mode=0644
+  become: True
+  when: symfony_env == "dev"
+
+- name: Ensure environment aware bash_profile for development
+  template: src=.bash_profile.j2 dest=/home/vagrant/.bash_profile owner=vagrant group=vagrant mode=0655
+  when: symfony_env == "dev"
+
+- name: Copy ssh config for dev
+  copy: src=ssh_config dest=/home/vagrant/.ssh/config owner=vagrant group=vagrant mode=0655
+  when: symfony_env == "dev"
+
+- name: Copy environment file for better PATH
+  copy: src=environment dest=/etc/environment mode=0644
+  when: symfony_env == "dev"
+  become: True
+
+- name: Ensure environment aware MOTD
+  template: src=motd.j2 dest=/etc/motd owner=root group=root mode=0644
+  become: True
+
+- name: Ensure web directory permissions
+  file: path=/var/www state=directory mode=0755 owner={{ ansible_ssh_user }} group={{ ansible_ssh_user }}
+  become: True
+
+- name: Ensure vendor directory and permissions
+  file: path=/var/vendor state=directory mode=0755 owner={{ ansible_ssh_user }} group={{ ansible_ssh_user }}
+  become: True
+
+- name: Ensure limits conf
+  copy: src=limits.conf dest=/etc/security/limits.conf
+  become: True
+
+- name: Ensure file-max
+  shell: echo 500000 > /proc/sys/fs/file-max
+  become: True
+
+- name: Ensure /etc/sysctl.conf
+  template: src=sysctl.conf.j2 dest=/etc/sysctl.conf
+  become: True

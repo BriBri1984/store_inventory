@@ -1,0 +1,6 @@
+---
+dev_app_mysql_db:   FloSports
+test_app_mysql_db:  FloSports_Test
+dev_app_mysql_host: 127.0.0.1
+dev_app_mysql_user: flosports
+dev_app_mysql_pass: flosports

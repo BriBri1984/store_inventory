@@ -1,0 +1,28 @@
+---
+- name: Install xdebug dev machine package(s)
+  apt: pkg="php7.1-xdebug" state=present
+  when: symfony_env == "dev"
+  become: True
+
+- name: Ensure xdebug config
+  copy: src=xdebug.ini dest=/etc/php/7.1/mods-available/xdebug.ini
+  become: True
+  when: symfony_env == "dev"
+
+- name: create symlinks (fpm) -- xdebug.ini
+  file: src="{{ item.src }}" dest="{{ item.dest }}" state=link
+  become: True
+  with_items:
+    - { src: '/etc/php/7.1/mods-available/xdebug.ini', dest: '/etc/php/7.1/fpm/conf.d/20-xdebug.ini' }
+    - { src: '/etc/php/7.1/mods-available/xdebug.ini', dest: '/etc/php/7.1/cli/conf.d/20-xdebug.ini' }
+  when: symfony_env == "dev"
+
+- name: Set permissions on xdebug.php toggle script
+  file: path=/var/www/app/xdebug.php mode=0777 owner={{ ansible_ssh_user }} group={{ ansible_ssh_user }}
+  become: False
+  ignore_errors: True
+
+- name: Restart php7.1-fpm
+  service: name=php7.1-fpm state=restarted
+  become: True
+  when: symfony_env == "dev"

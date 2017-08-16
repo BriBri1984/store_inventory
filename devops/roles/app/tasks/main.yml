@@ -1,0 +1,29 @@
+---
+- name: Ensure dirs
+  file: state=directory path={{ item }} owner={{ ansible_ssh_user }} group={{ ansible_ssh_user }} mode=0755
+  with_items:
+      - "/var/vendor"
+      - "/home/vagrant/.aws"
+      - "/var/www/app/web/uploads"
+  when: symfony_env == "dev"
+
+- name: Ensure aws root dir
+  file: state=directory path=/.aws owner={{ ansible_ssh_user }} group={{ ansible_ssh_user }} mode=0755
+  become: True
+
+- name: Clear contents of cache dir
+  file: path=/var/www/app/app/cache/ state=absent
+  become: True
+
+- name: Install APP composer packages
+  composer: command=install working_dir=/var/www/app optimize_autoloader=yes no_dev=yes
+  become: False
+  ignore_errors: True
+
+- name: Restart services
+  service: name={{ item }} state=restarted enabled=yes
+  with_items:
+    - nginx
+    - php7.1-fpm
+  become: True
+  ignore_errors: True

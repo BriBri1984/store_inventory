@@ -1,0 +1,2 @@
+[api]
+10.10.10.123 ansible_connection=local

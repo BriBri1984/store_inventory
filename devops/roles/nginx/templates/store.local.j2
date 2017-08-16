@@ -1,0 +1,25 @@
+server {
+    listen 80;
+
+    root /var/www/app/web;
+    server_name store.local;
+
+    error_log /var/log/nginx/store.local.{{ symfony_env }}-error.log;
+    access_log /var/log/nginx/store.local.{{ symfony_env }}-access.log;
+
+    location / {
+        sendfile off;
+        try_files $uri /app_dev.php$is_args$args;
+    }
+
+    location ~ ^/(app_dev)\.php(/|$) {
+        fastcgi_pass unix:/var/run/php7.1-fpm.sock;
+        fastcgi_split_path_info ^(.+\.php)(/.*)$;
+        include fastcgi_params;
+        fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param  HTTPS off;
+        fastcgi_param  SYMFONY_ENV  '{{ symfony_env }}';
+        fastcgi_param  SYMFONY_DEBUG  true;
+        fastcgi_read_timeout 600;
+    }
+}

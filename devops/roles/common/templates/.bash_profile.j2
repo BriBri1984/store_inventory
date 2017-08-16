@@ -1,0 +1,36 @@
+alias l='ls -w'
+alias ll='ls -hal'
+alias s='git status'
+alias p='git pull'
+alias d='git diff head'
+alias a='cd /var/www/app'
+alias pu='git push'
+alias b='git branch'
+alias c='git commit -a'
+alias r='sudo service nginx restart; sudo service php7.1-fpm restart;'
+alias cu='php /usr/local/bin/composer update'
+alias dm='./bin/console doctrine:migrations:migrate'
+alias dd='./bin/console doctrine:migrations:diff'
+alias vr='sudo service varnish stop && sudo service varnish start'
+
+function ccc() {
+    php bin/console doctrine:cache:clear-metadata
+    php bin/console doctrine:cache:clear-result
+    php bin/console doctrine:cache:clear-query
+    sudo rm -rf var/cache/*
+    sudo rm var/logs/local.log
+}
+
+export CLICOLOR=1
+export LSCOLORS=ExFxBxDxCxegedabagacad
+export PS1="\[\033[36m\]\u\[\033[m\]@\[\033[32m\]{{symfony_env}}:\[\033[33;1m\]\w\[\033[m\]\$ "
+
+alias lg="git log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all"
+alias lg1="git log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all"
+
+export SYMFONY_ENV={{ symfony_env }}
+export AWS_CONFIG_FILE=/home/vagrant/.aws/credentials
+export APP_SITE_ID=13
+
+# Change directory to app
+cd /var/www/app

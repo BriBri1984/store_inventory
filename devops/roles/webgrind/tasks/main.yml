@@ -1,0 +1,30 @@
+---
+- name: Install graphviz; used by webgrind
+  apt: pkg=graphviz state=present
+  when: symfony_env == "dev"
+  become: True
+
+- name: Create the webgrind dirs
+  file: name=/var/www/webgrind/storage state=directory owner={{ ansible_ssh_user }} group={{ ansible_ssh_user }}
+  when: symfony_env == "dev"
+  become: True
+
+- name: Copy webgrind package to vm
+  copy: src=webgrind-master.zip dest=/tmp/webgrind-master.zip
+  when: symfony_env == "dev"
+  become: True
+
+- name: Extract the webgrind package
+  unarchive: src=/tmp/webgrind-master.zip dest=/var/www/webgrind copy=no creates=/var/www/webgrind/index.php
+  when: symfony_env == "dev"
+  become: True
+
+- name: Move the webgrind package contents to the webgrind dir
+  shell: mv /var/www/webgrind/webgrind-master/* /var/www/webgrind creates=/var/www/webgrind/index.php
+  when: symfony_env == "dev"
+  become: True
+
+- name: Remove the webgrind-master dir
+  file: path=/var/www/webgrind/webgrind-master state=absent
+  when: symfony_env == "dev"
+  become: True

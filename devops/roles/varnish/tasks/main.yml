@@ -1,0 +1,35 @@
+---
+- name: Remove apache
+  apt: name=apache2 state=absent force=yes
+  become: True
+
+- name: Check if varnishd is installed
+  command: which varnishd
+  register: varnish_check
+  ignore_errors: True
+
+- name: install apt-transport-https
+  apt: name=apt-transport-https
+  when: varnish_check.rc == 1
+  become: True
+
+- name: Setup varnish repo
+  script: setup_repo.sh
+  become: True
+  when: varnish_check.rc == 1
+
+- name: Install varnish
+  apt: name=varnish
+  become: True
+  when: varnish_check.rc == 1
+
+- name: Configure varnish configs
+  copy: src={{ item.src }} dest={{ item.dest }}
+  with_items:
+      - { src: "default.vcl", dest: "/etc/varnish/default.vcl"}
+      - { src: "varnish", dest: "/etc/default/varnish" }
+  become: True
+
+- name: Restart varnish
+  service: name=varnish state=restarted
+  become: True
