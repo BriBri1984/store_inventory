@@ -15,7 +15,7 @@
 
 </head>
 <body>
-{% set route = path(app.request.attributes.get('_route')) %}
+{% set route = app.request.attributes.get('_route') %}
 <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse fixed-top">
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
             data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false"
