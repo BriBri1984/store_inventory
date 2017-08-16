@@ -1,4 +1,8 @@
 ---
+- name: Remove apache
+  apt: name=apache2 state=absent force=yes
+  become: True
+
 - name: Installing nginx repository key
   apt_key:
     url: "{{ item }}"
