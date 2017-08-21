@@ -31,7 +31,7 @@ class StoreStock
     /**
      * @var Stock
      *
-     * @ORM\ManyToOne(targetEntity="InventoryBundle\Entity\Stock")
+     * @ORM\ManyToOne(targetEntity="InventoryBundle\Entity\Stock", inversedBy="stockQuantity")
      */
     private $stock;
 

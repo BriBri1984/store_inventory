@@ -24,7 +24,7 @@ class StoreStockForm extends AbstractType
                 'choice_label' => 'getName',
             ])
             ->add('quantity', NumberType::class)
-            ->add('date', DateType::class, [
+            ->add('date_given', DateType::class, [
                 'html5' => 'true',
                 'required' => 'true'
             ]);
