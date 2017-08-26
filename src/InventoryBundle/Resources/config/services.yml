@@ -1,4 +1,13 @@
 services:
+
+# THIS IS THE SERVICE CONTAINER
+
 #    inventory.example:
 #        class: InventoryBundle\Example
 #        arguments: ["@service_id", "plain_value", "%parameter%"]
+
+
+    service.store_stock:
+        class: InventoryBundle\Service\StockService
+        arguments: ["@doctrine.orm.entity_manager"]
+

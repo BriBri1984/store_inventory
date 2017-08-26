@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use \DateTime;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="InventoryBundle\Repository\StoreStockRepository")
  * @ORM\Table(name="store_stock")
  */
 class StoreStock
