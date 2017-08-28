@@ -37,16 +37,16 @@ class StoreStockController extends Controller
             $canGiveStock = $stockService->canGiveStock($stock, $quantity);
 
             if ($canGiveStock) {
-                echo 'Yes you can!';
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($storeStock);
+                $em->flush();
             }else{
-                echo 'No you can\', you can only add '. $stockService->getQuantityOnHand();
+                $this->addFlash('danger', 'No you can\'t, you can only add '. $stockService->getQuantityOnHand());
+
+
             }
 
-            dump($stockService);
-            die;
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($storeStock);
-            $em->flush();
+
         }
 
         $storeStockRepo = $this->getDoctrine()->getRepository(StoreStock::class);
