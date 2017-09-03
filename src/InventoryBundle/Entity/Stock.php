@@ -160,4 +160,16 @@ class Stock
 
         return $averagePrice;
     }
+
+//    public function getCurrentPrice()
+//    {
+//        $curentPrice = 0;
+//
+//        if (!empty($this->stockQuantity)){
+//
+//            foreach ($this->stockQuantity as $stockQuantity){
+//                $curentPrice =
+//            }
+//        }
+//    }
 }

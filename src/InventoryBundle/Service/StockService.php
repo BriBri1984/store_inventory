@@ -58,6 +58,11 @@ class StockService
         return $this->quantityOnHand;
     }
 
+    public function getTotalPrice(Stock $stock, int $quantity)
+    {
+        return $stock->getAveragePrice() * $quantity;
+    }
+
 
 
 }

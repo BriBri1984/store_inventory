@@ -49,6 +49,12 @@ class StoreStock
     private $dateGiven;
 
     /**
+     * @var int
+     * @ORM\Column(name="price", type="integer", nullable=false)
+     */
+    private $price;
+
+    /**
      * @return int
      */
     public function getId()
@@ -127,4 +133,21 @@ class StoreStock
     {
         $this->dateGiven = $dateGiven;
     }
+
+    /**
+     * @return int
+     */
+    public function getPrice(): int
+    {
+        return $this->price;
+    }
+
+    /**
+     * @param int $price
+     */
+    public function setPrice(int $price)
+    {
+        $this->price = $price;
+    }
+
 }

@@ -36,6 +36,10 @@ class StoreStockController extends Controller
 
             $canGiveStock = $stockService->canGiveStock($stock, $quantity);
 
+            $totalPrice = $stockService->getTotalPrice($stock, $quantity);
+
+            $data->setPrice($totalPrice);
+
             if ($canGiveStock) {
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($storeStock);
