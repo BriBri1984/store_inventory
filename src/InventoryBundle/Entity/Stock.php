@@ -152,7 +152,7 @@ class Stock
         if (!empty($this->stockQuantity) && $this->stockQuantity->count() > 0) {
 
             foreach ($this->stockQuantity as $stockQuantity) {
-                $averagePrice += $stockQuantity->getPrice();
+                $averagePrice += $stockQuantity->getPrice() / 100;
             }
 
             $averagePrice = $averagePrice / $this->stockQuantity->count();

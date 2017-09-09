@@ -31,7 +31,7 @@ class StoreStock
     /**
      * @var Stock
      *
-     * @ORM\ManyToOne(targetEntity="InventoryBundle\Entity\Stock", inversedBy="stockQuantity")
+     * @ORM\ManyToOne(targetEntity="InventoryBundle\Entity\Stock", inversedBy="stockQuantity", fetch="EAGER")
      */
     private $stock;
 
@@ -53,6 +53,11 @@ class StoreStock
      * @ORM\Column(name="price", type="integer", nullable=false)
      */
     private $price;
+
+    public function __construct()
+    {
+        $this->dateGiven = new \DateTime();
+    }
 
     /**
      * @return int

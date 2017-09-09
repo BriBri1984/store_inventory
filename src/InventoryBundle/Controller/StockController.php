@@ -68,6 +68,11 @@ class StockController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
 
             $stockQuantity = $form->getData();
+            dump($stockQuantity);
+            $price = $stockQuantity->getPrice();
+            $price = $price * 100;
+            $stockQuantity->setPrice($price);
+            dump($stockQuantity);
             $stockQuantity->setStock($stock);
             $em = $this->getDoctrine()->getManager();
             $em->persist($stockQuantity);

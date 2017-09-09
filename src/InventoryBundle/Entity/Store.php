@@ -52,6 +52,7 @@ class Store
     private $storeStock;
 
 
+
     /**
      * @return mixed
      */
@@ -157,7 +158,9 @@ class Store
     {
         $this->storeStock = $storeStock;
     }
-    
+
+
+
 
 
 
