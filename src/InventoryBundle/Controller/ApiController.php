@@ -2,30 +2,32 @@
 
 namespace InventoryBundle\Controller;
 
-use Doctrine\DBAL\Types\JsonArrayType;
 use InventoryBundle\Entity\StoreStock;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
+/**
+ * Class ApiController
+ * @package InventoryBundle\Controller
+ */
 class ApiController extends Controller
 {
     /**
-     * @Route("/api/store-stock/{store}", name="api_store_stock")
-     * @param $store
+     * @Route("/api/store-stock/{storeId}", name="api_store_stock")
+     * @param int $storeId
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function getStoreStockDataAction($store)
+    public function getStoreStockDataAction($storeId)
     {
-
         $storeStockRepo = $this->getDoctrine()->getRepository(StoreStock::class);
 
-        $data = $storeStockRepo->findBy(["store" => $store]);
+        $data = $storeStockRepo->findBy(["store" => $storeId]);
 
+        $serializer = $this->get('jms_serializer');
+        $json       = $serializer->serialize($data, 'json');
 
-
-
-        return new JsonResponse($data);
+        return new Response($json);
     }
 }
