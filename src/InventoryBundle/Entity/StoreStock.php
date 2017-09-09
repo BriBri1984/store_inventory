@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use \DateTime;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="InventoryBundle\Repository\StoreStockRepository")
  * @ORM\Table(name="store_stock")
  */
 class StoreStock
@@ -31,7 +31,7 @@ class StoreStock
     /**
      * @var Stock
      *
-     * @ORM\ManyToOne(targetEntity="InventoryBundle\Entity\Stock")
+     * @ORM\ManyToOne(targetEntity="InventoryBundle\Entity\Stock", inversedBy="stockQuantity")
      */
     private $stock;
 
@@ -47,6 +47,12 @@ class StoreStock
      * @ORM\Column(name="date_given", type="datetime", nullable=false)
      */
     private $dateGiven;
+
+    /**
+     * @var int
+     * @ORM\Column(name="price", type="integer", nullable=false)
+     */
+    private $price;
 
     /**
      * @return int
@@ -127,4 +133,21 @@ class StoreStock
     {
         $this->dateGiven = $dateGiven;
     }
+
+    /**
+     * @return int
+     */
+    public function getPrice(): int
+    {
+        return $this->price;
+    }
+
+    /**
+     * @param int $price
+     */
+    public function setPrice(int $price)
+    {
+        $this->price = $price;
+    }
+
 }

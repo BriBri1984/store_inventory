@@ -142,6 +142,23 @@ class Store
         $this->phoneNumber = $phoneNumber;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getStoreStock()
+    {
+        return $this->storeStock;
+    }
+
+    /**
+     * @param mixed $storeStock
+     */
+    public function setStoreStock($storeStock)
+    {
+        $this->storeStock = $storeStock;
+    }
+    
+
 
 
 
