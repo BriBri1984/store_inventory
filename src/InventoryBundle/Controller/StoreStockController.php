@@ -22,7 +22,9 @@ class StoreStockController extends Controller
         $storeStock = new StoreStock();
 
         $form = $this->createForm(StoreStockForm::class, $storeStock);
+        $form2 = $this->createForm(StoreStockForm::class);
         $form->handleRequest($request);
+        $form2->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
@@ -50,14 +52,16 @@ class StoreStockController extends Controller
 
             }
 
-
         }
+
+
+
 
         $storeStockRepo = $this->getDoctrine()->getRepository(StoreStock::class);
         $storeStock = $storeStockRepo->findAll();
-
         return $this->render("@Inventory/StoreStock/add.store.stock.html.twig", [
             'form' => $form->createView(),
+            'form2' => $form2->createView(),
             'storeStock' => $storeStock,
         ]);
     }

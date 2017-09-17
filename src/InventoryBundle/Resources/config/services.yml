@@ -11,3 +11,7 @@ services:
         class: InventoryBundle\Service\StockService
         arguments: ["@doctrine.orm.entity_manager"]
 
+
+    service.store:
+        class: InventoryBundle\Service\StoreService
+        autowire: true

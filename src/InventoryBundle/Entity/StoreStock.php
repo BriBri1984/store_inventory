@@ -4,6 +4,7 @@
 namespace InventoryBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 use \DateTime;
 
 /**
@@ -44,6 +45,9 @@ class StoreStock
 
     /**
      * @var DateTime
+     *
+     * @JMS\Type("DateTime<'m/d/Y'>")
+     *
      * @ORM\Column(name="date_given", type="datetime", nullable=false)
      */
     private $dateGiven;

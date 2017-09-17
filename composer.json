@@ -67,5 +67,9 @@
             "file": "app/config/parameters.yml"
         },
         "branch-alias": null
+    },
+    "require-dev": {
+        "doctrine/doctrine-fixtures-bundle": "^2.4",
+        "nelmio/alice": "^2.1"
     }
 }

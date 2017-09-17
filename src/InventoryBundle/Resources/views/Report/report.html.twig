@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <div class="container">
+
+        {% for msg in app.session.flashBag.get('danger') %}
+            <div class="alert alert-danger" role="alert">
+                {{ msg }}
+            </div>
+        {% endfor %}
+        <div class="row">
+
+            <span class="col-md-3">
+
+                <form class="form-inline" method="post" id="store-form">
+                    <select name="store_id_from_frontend_form" class="form-control" id="store-selection">
+                        <option value="">Select Store</option>
+                        {% for store in stores %}
+
+                            <option value="{{ store.id }}" selected="selected">{{ store.storeName }}</option>
+
+                        {% endfor %}
+                    </select>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+
+            </span>
+            <span class="col-md-9">
+                <div id="report-container"></div>
+            </span>
+        </div>
+    </div>
+
+
+    <script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="{{ asset('js/store.stock.js') }}"></script>
+
+{% endblock content %}

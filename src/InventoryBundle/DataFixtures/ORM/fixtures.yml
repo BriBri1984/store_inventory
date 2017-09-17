@@ -1,0 +1,46 @@
+InventoryBundle\Entity\Store:
+    store_0:
+        storeName: A1
+        location:  Central
+        manager: Eddie
+        phoneNumber: 555-5555
+
+    store_1:
+        storeName: A2
+        location:  HackBerry
+        manager: Rosie
+        phoneNumber: 444-4444
+
+    store_2:
+        storeName: A3
+        location:  OPI
+        manager: Joey
+        phoneNumber: 333-3333
+
+InventoryBundle\Entity\Stock:
+    stock_0:
+        name: Mr.Clean
+        date: '<dateTime()>'
+
+    stock_1:
+        name: Windex
+        date: '<dateTime()>'
+
+    stock_2:
+        name: Can Air
+        date: '<dateTime()>'
+
+InventoryBundle\Entity\StockQuantity:
+    stock.quantity{1..10}:
+        stock: '@stock_*'
+        price: '<numberBetween(10, 20)>'
+        date: '<dateTime()>'
+        stockQuantity: '<numberBetween(1, 10)>'
+
+InventoryBundle\Entity\StoreStock:
+    store.stock{1..10}:
+        store: '@store_*'
+        stock: '@stock_*'
+        quantity: '<numberBetween(1, 10)>'
+        dateGiven: '<dateTime()>'
+        price: '<numberBetween(100, 80000)>'
