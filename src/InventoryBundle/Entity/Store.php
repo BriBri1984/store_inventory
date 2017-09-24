@@ -52,7 +52,6 @@ class Store
     private $storeStock;
 
 
-
     /**
      * @return mixed
      */
@@ -159,10 +158,21 @@ class Store
         $this->storeStock = $storeStock;
     }
 
+    /**
+     * @return int
+     */
+    public function getStoresPrice()
+    {
+        $price = 0;
 
-
-
-
+        if (!empty($this->storeStock) && $this->storeStock->count() > 0) {
+            foreach ($this->storeStock as $storeStock) {
+                $price += $storeStock->getPrice();
+            }
+            $price = $price / 100;
+        }
+        return $price;
+    }
 
 
 }

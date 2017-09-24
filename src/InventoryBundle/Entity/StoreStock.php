@@ -159,4 +159,5 @@ class StoreStock
         $this->price = $price;
     }
 
+
 }

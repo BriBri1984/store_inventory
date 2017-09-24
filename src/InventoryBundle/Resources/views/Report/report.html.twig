@@ -27,7 +27,25 @@
             </span>
             <span class="col-md-9">
                 <div id="report-container"></div>
+
             </span>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Grand Totals</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                {% for store in stores %}
+                <tr>
+                    <td>{{ store.storeName }}</td>
+                    <td>${{ store.storesPrice | number_format(2) }}</td>
+                {% endfor %}
+                </tr>
+                </tbody>
+            </table>
+
         </div>
     </div>
 

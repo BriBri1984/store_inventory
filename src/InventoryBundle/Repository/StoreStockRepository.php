@@ -4,6 +4,7 @@ namespace InventoryBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use InventoryBundle\Entity\Stock;
+use InventoryBundle\Entity\Store;
 
 /**
  * Class StoreStockRepository
@@ -15,4 +16,13 @@ class StoreStockRepository extends EntityRepository
     {
         return $this->findBy(['stock' => $stock]);
     }
+
+    public function getStoreStockStore (Store $store)
+    {
+        return $this->findBy(['store' => $store]);
+    }
+
+
+
+
 }

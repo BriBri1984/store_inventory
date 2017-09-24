@@ -40,10 +40,10 @@ class StockController extends Controller
 
         // get all stock records
         $stockRepo = $this->getDoctrine()->getRepository(Stock::class);
-        $stock     = $stockRepo->findAll();
+        $stock = $stockRepo->findAll();
 
         return $this->render("@Inventory/Stock/index.html.twig", [
-            'form'  => $form->createView(),
+            'form' => $form->createView(),
             'stock' => $stock,
         ]);
     }
@@ -59,9 +59,9 @@ class StockController extends Controller
     {
         $stockRepo = $this->getDoctrine()->getRepository(Stock::class);
         $stockQuantityRepo = $this->getDoctrine()->getRepository(StockQuantity::class);
-        $stock     = $stockRepo->find($id);
+        $stock = $stockRepo->find($id);
         $stockQuantity = $stockQuantityRepo->findAll();
-        $form      = $this->createForm(AddQuantity::class);
+        $form = $this->createForm(AddQuantity::class);
 
         $form->handleRequest($request);
 
@@ -88,7 +88,7 @@ class StockController extends Controller
 
         return $this->render("@Inventory/StockQuantity/add_quantity.html.twig", [
             'stock' => $stock,
-            'form'  => $form->createView(),
+            'form' => $form->createView(),
             'stockQuantityRecords' => $stockQuantity,
 
         ]);
