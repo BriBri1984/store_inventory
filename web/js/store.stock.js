@@ -1,9 +1,9 @@
-$(document).ready(function () {
+$(document).ready(function() {
 
     console.log('everything is loaded');
 
     // Tap into the form submit event
-    $("#store-form").submit(function (event) {
+    $("#store-form").submit(function(event) {
 
         event.preventDefault();
 
@@ -19,35 +19,42 @@ $(document).ready(function () {
         $.ajax({
             url: apiUrl,
             dataType: 'json',
-            success: function(data){
+            success: function(data) {
 
                 // create a variable to hold all the html for the table
-                var reportHtml = '<div class="table-responsive"><table class="table-bordered table-striped"><thead><tr><th>Stock Item Name</th><th>Date</th><th>Quantity</th><th>Price</th></tr></thead><tbody>';
+                var reportHtml = '<div class="table-responsive">' +
+                    '<table class="table-bordered table-striped">' +
+                    '<thead>' +
+                    '<tr>' +
+                    '   <th>Stock Item Name</th><th>Date</th><th>Quantity</th><th>Price</th>' +
+                    '</tr>' +
+                    '</thead>' +
+                    '<tbody>';
 
 
                 // loop through the data
-                for(var index in data){
+                for (var index in data) {
 
                     var item = data[index];
 
                     // create a row for each record in the report and add it to the variable
                     reportHtml += '<tr>';
 
-                        reportHtml += '<td>';
-                        reportHtml += item.stock.name;
-                        reportHtml += '</td>';
+                    reportHtml += '<td>';
+                    reportHtml += item.stock.name;
+                    reportHtml += '</td>';
 
-                        reportHtml += '<td>';
-                        reportHtml += item.date_given;
-                        reportHtml += '</td>';
+                    reportHtml += '<td>';
+                    reportHtml += item.date_given;
+                    reportHtml += '</td>';
 
-                        reportHtml += '<td>';
-                        reportHtml += item.quantity;
-                        reportHtml += '</td>';
+                    reportHtml += '<td>';
+                    reportHtml += item.quantity;
+                    reportHtml += '</td>';
 
-                        reportHtml += '<td>';
-                        reportHtml += '$' + item.price / 100;
-                        reportHtml += '</td>';
+                    reportHtml += '<td>';
+                    reportHtml += '$' + item.price / 100;
+                    reportHtml += '</td>';
 
                     reportHtml += '</tr>';
 
