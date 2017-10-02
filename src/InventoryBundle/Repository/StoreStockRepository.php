@@ -23,6 +23,27 @@ class StoreStockRepository extends EntityRepository
     }
 
 
+    public function search($term)
+    {
+        //took it from inventory repo
+//        return $this->createQueryBuilder('i')
+//            ->andWhere('i.productName LIKE :searchTerm')
+//            ->leftJoin('i.store', 'store')
+//            ->addSelect('store')
+//            ->setParameter('searchTerm', '%' . $term . '%')
+//            ->getQuery()
+//            ->execute();
+        return $this->createQueryBuilder('i')
+            ->leftJoin('i.stock', 'stock')
+            ->leftJoin('i.store', 'store')
+            ->andWhere('stock.name LIKE :searchTerm
+                        OR store.storeName LIKE :searchTerm')
+
+            ->addSelect('store')
+            ->setParameter('searchTerm', '%' . $term . '%')
+            ->getQuery()
+            ->execute();
+    }
 
 
 }

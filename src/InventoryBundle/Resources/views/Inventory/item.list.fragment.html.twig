@@ -5,30 +5,20 @@
                 <tr>
                     <th>#</th>
                     <th>Product Name</th>
-                    <th>Cost</th>
-                    <th>Stock Quantity</th>
                     <th>Store</th>
-                    <th>Edit</th>
+                    <th>Stock Quantity</th>
+
                 </tr>
                 </thead>
                 <tbody>
                 {% for item in items %}
                     <tr>
                         <th scope="row">{{ item.id }}</th>
-                        <td>{{ item.productName }}</td>
-                        <td>{{ item.cost }}</td>
+                        <td>{{ item.stock.name }}</td>
+                        <td>{{ item.store.storeName }}</td>
                         <td>{{ item.quantity }}</td>
-                        <td>
-                            {% if item.store %}
-                                {{ item.store.storeName }}
-                            {% else %}
-                                NO STORE FOUND
-                            {% endif %}
-                        </td>
 
-                        <td>
-                            <a href="{{ path('edit_inventory_form', {"id": item.id}) }}" class="btn btn-xs btn-primary"><span class="fa fa-pencil"></span></a>
-                        </td>
+
                     </tr>
                 {% endfor %}
 

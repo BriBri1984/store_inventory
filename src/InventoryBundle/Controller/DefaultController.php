@@ -3,7 +3,9 @@
 namespace InventoryBundle\Controller;
 
 use InventoryBundle\Entity\Inventory;
+use InventoryBundle\Entity\Stock;
 use InventoryBundle\Entity\Store;
+use InventoryBundle\Entity\StoreStock;
 use InventoryBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -58,7 +60,7 @@ class DefaultController extends Controller
 
         $query = $request->query->get('q');
 
-        $items = $this->getDoctrine()->getRepository(Inventory::class)->search($query);
+        $items = $this->getDoctrine()->getRepository(StoreStock::class)->search($query);
 
         return $this->render('@Inventory/Search/search.results.html.twig', [
             'items' => $items,

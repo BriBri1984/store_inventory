@@ -32,6 +32,7 @@ $(document).ready(function() {
                     '<tbody>';
 
 
+                var grandTotal = 0;
                 // loop through the data
                 for (var index in data) {
 
@@ -42,7 +43,7 @@ $(document).ready(function() {
 
                     reportHtml += '<td>';
                     reportHtml += item.stock.name;
-                    reportHtml += '</td>';
+                     reportHtml += '</td>';
 
                     reportHtml += '<td>';
                     reportHtml += item.date_given;
@@ -58,7 +59,15 @@ $(document).ready(function() {
 
                     reportHtml += '</tr>';
 
+                    grandTotal += item.price;
                 }
+
+                    reportHtml += '<tr>';
+                    reportHtml += '<td colspan="4" align="right">';
+                    reportHtml += '$' + grandTotal / 100;
+                    reportHtml += '</td>';
+                    reportHtml += '</tr>';
+
 
                 reportHtml += '</tbody></table></div>';
 
